@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface StandardCalcResultService {
 
-List<StandardCalcResultEntity> getAllByRecordUQRegister(int recordUQRegister);
+List<StandardCalcResultEntity> getAllByRecordUQRegister(long recordUQRegister);
 
 }

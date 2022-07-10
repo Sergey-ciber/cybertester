@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StandardCalcResultRepository extends JpaRepository<StandardCalcResultEntity, Integer> {
+public interface StandardCalcResultRepository extends JpaRepository<StandardCalcResultEntity, Long> {
 
-    List<StandardCalcResultEntity> getAllByRecordUQRegister(int register);
+    List<StandardCalcResultEntity> getAllByRecordUQRegister(long register);
 }

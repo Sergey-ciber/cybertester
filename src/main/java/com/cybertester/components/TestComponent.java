@@ -1,11 +1,10 @@
 package com.cybertester.components;
 
-import com.cybertester.entity.standardCalc.StandardCalcResultEntity;
-import com.cybertester.entity.testCalc.TestCalcResultEntity;
-import com.cybertester.repository.standardCalc.StandardCalcResultRepository;
+import com.cybertester.managers.pvsoManagers.PvsoManagers;
 import com.cybertester.service.standardCalc.StandardCalcResultService;
+import com.cybertester.service.standardCalc.StandardDxRegistrService;
 import com.cybertester.service.testCalc.TestCalcResultService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cybertester.utils.CalcUtility;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,31 +14,68 @@ public class TestComponent {
 
     private final TestCalcResultService testCalcResultService;
     private final StandardCalcResultService standardCalcResultService;
+    private final StandardDxRegistrService standardDxRegistrService;
+    private final PvsoManagers pvsoManagers;
+    private final CalcUtility calcUtility;
 
-    public TestComponent(StandardCalcResultService standardCalcResultService, TestCalcResultService testCalcResultService) {
+    public TestComponent(StandardCalcResultService standardCalcResultService, TestCalcResultService testCalcResultService,
+                         StandardDxRegistrService standardDxRegistrService, PvsoManagers pvsoManagers, CalcUtility calcUtility) {
         this.standardCalcResultService = standardCalcResultService;
         this.testCalcResultService = testCalcResultService;
+        this.standardDxRegistrService = standardDxRegistrService;
+        this.pvsoManagers = pvsoManagers;
+        this.calcUtility = calcUtility;
     }
 
 
     @PostConstruct
     public void test() {
         System.out.println("Start");
-        TestCalcResultEntity t = new TestCalcResultEntity();
-        t.setRe
-        t.setPeriodBegDay("01.01.2022");
-        t.setPeriodEndDay("10.01.2022");
-        t.setPrice(100.00);
-        t.setRecordUQRegister(123);
-        t.setPeriodPercent(100);
-        t.setPricesPercent(100.00);
-        t.setCountDays(7.0);
-        t.setSumma(7000.00);
-        t.setRecordUqAlceType(123);
-        t.setRecordUqBCC(123131232);
-        t.setYearCalc(2022);
-        testCalcResultService.create(t);
-//        for(StandardCalcResultEntity s : standardCalcResultService.getAllByRecordUQRegister(124113461)){
+
+        calcUtility.comparisonCalcResult("E31091222CFCDD74E0530813E00AAEA8");
+
+//        System.out.println(standardDxRegistrService.getGuid(124124901));
+//
+//        pvsoManagers.deleteDxRegistr("E32136B2A1AFBEA7E0530813E00AD6D0");
+//
+//        List<StandardCalcResultEntity> standardList = standardCalcResultService.getAllByRecordUQRegister(124123239);
+//
+//        System.out.println("В базе ПВСО найдено " + standardList.size() + " записей");
+
+//        for(StandardCalcResultEntity s : standardCalcResultService.getAllByRecordUQRegister(124123239)) {
+//            TestCalcResultEntity t = new TestCalcResultEntity();
+//            t.setPeriodBegDay(s.getPeriodBegDay());
+//            t.setPeriodEndDay(s.getPeriodEndDay());
+//            t.setPrice(s.getPrice());
+//            t.setRecordUQRegister(s.getRecordUQRegister());
+//            t.setPeriodPercent(s.getPeriodPercent());
+//            t.setPricesPercent(s.getPricesPercent());
+//            t.setCountDays(s.getCountDays());
+//            t.setSumma(s.getSumma());
+//            t.setRecordUqAlceType(s.getRecordUqAlceType());
+//            t.setRecordUqBCC(s.getRecordUqBCC());
+//            t.setYearCalc(s.getYearCalc());
+//            System.out.println("Добавлена новая запись");
+//            System.out.println(s);
+//            testCalcResultService.create(t);
+//        }
+
+//        for(StandardCalcResultEntity s : standardCalcResultService.getAllByRecordUQRegister(124123239)) {
+//
+//        t.setPeriodBegDay(s.getPeriodBegDay());
+//        t.setPeriodEndDay(s.getPeriodEndDay());
+//        t.setPrice(s.getPrice());
+//        t.setRecordUQRegister(s.getRecordUQRegister());
+//        t.setPeriodPercent(s.getPeriodPercent());
+//        t.setPricesPercent(s.getPricesPercent());
+//        t.setCountDays(s.getCountDays());
+//        t.setSumma(s.getSumma());
+//        t.setRecordUqAlceType(s.getRecordUqAlceType());
+//        t.setRecordUqBCC(s.getRecordUqBCC());
+//        t.setYearCalc(s.getYearCalc());
+//            System.out.println("Добавилась одна запись");
+//        testCalcResultService.create(t);
+//        }
 //            testCalcResultService.create(new TestCalcResultEntity(s.getPeriodBegDay(), s.getPeriodEndDay(), s.getPrice(),
 //                    s.getRecordUQRegister(), s.getPeriodPercent(), s.getPricesPercent(), s.getCountDays(), s.getSumma(),
 //                    s.getRecordUqAlceType(), s.getRecordUqBCC(), s.getYearCalc()));

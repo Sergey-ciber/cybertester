@@ -19,6 +19,7 @@ app:
       password: serg6363
       url: jdbc:postgresql://localhost:5433/cybertester
 
+
 spring:
   jpa:
     show-sql: true
@@ -27,7 +28,8 @@ spring:
         format_sql: true
 
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
+
 
 #  sql:
 #    init:
