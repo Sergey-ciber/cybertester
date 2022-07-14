@@ -5,20 +5,23 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 
+//@Transactional
 @EnableJpaRepositories(
         entityManagerFactoryRef = CyberTesterConfig.ENTITY_MANAGER_FACTORY,
         // Аннотация @EnableJpaRepositories активирует Spring Data JPA.
         // Spring Data JPA будет создавать конкретную реализацию для PersonRepository и настраивать на взаимодействие с БД в памяти, используя JPA.
-        transactionManagerRef = CyberTesterConfig.TRANSACTION_MANAGER,
+        transactionManagerRef = CyberTesterConfig.TEST_TRANSACTION_MANAGER,
         basePackages = CyberTesterConfig.JPA_REPOSITORY_PACKAGE
 )
 @Configuration
@@ -28,9 +31,9 @@ public class CyberTesterConfig {
     public static final String JPA_REPOSITORY_PACKAGE = "com.cybertester.repository.testCalc";
     public static final String ENTITY_PACKAGE = "com.cybertester.entity.testcalc";
     public static final String ENTITY_MANAGER_FACTORY = "testEntityManagerFactory";
-    public static final String DATA_SOURCE = "testDataSource";
+    public static final String TEST_DATA_SOURCE = "testDataSource";
     public static final String DATABASE_PROPERTY = "testDatabaseProperty";
-    public static final String TRANSACTION_MANAGER = "testTransactionManager";
+    public static final String TEST_TRANSACTION_MANAGER = "testTransactionManager";
 
     // отвечает за передачу данных из файла application.property для подключения к бд: пароль, логин, url и драйвер.
     @Bean(DATABASE_PROPERTY)
@@ -40,9 +43,10 @@ public class CyberTesterConfig {
     }
 
     //инициализация источника данных
-    @Bean(DATA_SOURCE)
+    @Bean(TEST_DATA_SOURCE)
     public DataSource appDataSource(
-            @Qualifier(DATABASE_PROPERTY) DatabaseProperty databaseProperty
+            @Qualifier(DATABASE_PROPERTY)
+            DatabaseProperty databaseProperty
     ) {
         return DataSourceBuilder
                 .create()
@@ -53,9 +57,10 @@ public class CyberTesterConfig {
                 .build();
     }
 
+
     @Bean(ENTITY_MANAGER_FACTORY)
     public LocalContainerEntityManagerFactoryBean appEntityManager(
-            @Qualifier(DATA_SOURCE) DataSource dataSource
+            @Qualifier(TEST_DATA_SOURCE) DataSource dataSource
     ) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
@@ -70,11 +75,11 @@ public class CyberTesterConfig {
         em.setJpaPropertyMap(properties);
         return em;
     }
-
-    @Bean(TRANSACTION_MANAGER)
+//    @Primary
+    @Bean(TEST_TRANSACTION_MANAGER)
     public PlatformTransactionManager sqlSessionTemplate(
             @Qualifier(ENTITY_MANAGER_FACTORY) LocalContainerEntityManagerFactoryBean entityManager,
-            @Qualifier(DATA_SOURCE) DataSource dataSource
+            @Qualifier(TEST_DATA_SOURCE) DataSource dataSource
     ) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManager.getObject());

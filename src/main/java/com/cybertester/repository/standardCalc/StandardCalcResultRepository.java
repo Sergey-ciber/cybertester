@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface StandardCalcResultRepository extends JpaRepository<StandardCalcResultEntity, Long> {
 
-    List<StandardCalcResultEntity> getAllByRecordUQRegister(long register);
+    // Получаем все записи по RECORD_UQ
+    List<StandardCalcResultEntity> getAllByRecordUqRegister(long recordUqRegistr);
+
+
 }

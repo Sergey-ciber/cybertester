@@ -27,7 +27,7 @@ public class StandardCalcResultEntity{
     private double price;
 
     @Column(name = "RECORD_UQ_REGISTR")
-    private long recordUQRegister;
+    private long recordUqRegister;
 
     @Column(name = "PERIOD_PERCENT")
     private int periodPercent;
@@ -75,7 +75,7 @@ public class StandardCalcResultEntity{
         StandardCalcResultEntity that = (StandardCalcResultEntity) o;
         return recordUQ == that.recordUQ &&
                 Double.compare(that.price, price) == 0 &&
-                recordUQRegister == that.recordUQRegister &&
+                recordUqRegister == that.recordUqRegister &&
                 periodPercent == that.periodPercent &&
                 Double.compare(that.pricesPercent, pricesPercent) == 0 &&
                 Double.compare(that.countDays, countDays) == 0 &&

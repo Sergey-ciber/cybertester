@@ -2,6 +2,7 @@ package com.cybertester.entity.testCalc;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
@@ -16,6 +17,9 @@ public class TestCalcResultEntity {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "record_uq")
+    private Long recordUq;
+
     @Column(name = "period_beg_day")
     private String periodBegDay;
 
@@ -25,8 +29,8 @@ public class TestCalcResultEntity {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "record_uq_registr")
-    private int recordUQRegister;
+    @Column(name = "record_uq_registr", nullable=true)
+    private Long recordUqRegistr;
 
     @Column(name = "period_percent")
     private int periodPercent;
@@ -53,10 +57,11 @@ public class TestCalcResultEntity {
     public String toString() {
         return "TestCalcResultEntity{" +
                 "id=" + id +
+                "record_uq=" + recordUq +
                 ", periodBegDay='" + periodBegDay + '\'' +
                 ", periodEndDay='" + periodEndDay + '\'' +
                 ", price=" + price +
-                ", recordUQRegister=" + recordUQRegister +
+                ", recordUQRegister=" + recordUqRegistr +
                 ", periodPercent=" + periodPercent +
                 ", pricesPercent=" + pricesPercent +
                 ", countDays=" + countDays +
