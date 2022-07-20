@@ -10,6 +10,7 @@ import com.cybertester.service.testCalc.TestCalcResultService;
 import com.cybertester.service.testCalc.TestDocsListService;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -35,18 +36,19 @@ public class CalcUtility {
     //     Сохраняем результаты расчета из ПВСО БД в тестовую БД
     public void saveCalcResultByRecordUqRegistr(long recordUqRegistr) {
 
+        List<TestCalcResultEntity> testCalcList = new ArrayList<>();
 
         if (testCalcResultService.getFirstByRecordUqRegistr(recordUqRegistr) != null) {
             System.out.println("\nРезультат будет перезаписан");
             deleteAllTestCalcResultByRecordUqRegistr(recordUqRegistr);
         }
-        for (StandardCalcResultEntity s : standardCalcResultService.getAllByRecordUqRegister(recordUqRegistr)) {
+        for (StandardCalcResultEntity s : standardCalcResultService.getAllByRecordUqRegistr(recordUqRegistr)) {
             TestCalcResultEntity t = new TestCalcResultEntity();
             t.setRecordUq(s.getRecordUq());
             t.setPeriodBegDay(s.getPeriodBegDay());
             t.setPeriodEndDay(s.getPeriodEndDay());
             t.setPrice(s.getPrice());
-            t.setRecordUqRegistr(s.getRecordUqRegister());
+            t.setRecordUqRegistr(s.getRecordUqRegistr());
             t.setPeriodPercent(s.getPeriodPercent());
             t.setPricesPercent(s.getPricesPercent());
             t.setCountDays(s.getCountDays());
@@ -56,8 +58,9 @@ public class CalcUtility {
             t.setYearCalc(s.getYearCalc());
             System.out.println("\nДобавлена новая запись");
             System.out.println(s);
-            testCalcResultService.create(t);
+            testCalcList.add(t);
         }
+        testCalcResultService.saveAll(testCalcList);
     }
 
     boolean equalsCalcResult(TestCalcResultEntity calcT, StandardCalcResultEntity calcS) {
@@ -67,7 +70,7 @@ public class CalcUtility {
         }
 
         return Double.compare(calcT.getPrice(), calcS.getPrice()) == 0 &&
-                calcT.getRecordUqRegistr() == calcS.getRecordUqRegister() &&
+                calcT.getRecordUqRegistr() == calcS.getRecordUqRegistr() &&
                 calcT.getPeriodPercent() == calcS.getPeriodPercent() &&
                 Double.compare(calcT.getPricesPercent(), calcS.getPricesPercent()) == 0 &&
                 Double.compare(calcT.getCountDays(), calcS.getCountDays()) == 0 &&
@@ -85,19 +88,19 @@ public class CalcUtility {
         String result = "";
 
         // Получаем список результатов расчета по RECORD_UQ_REGISTR
-        List<StandardCalcResultEntity> calcS = standardCalcResultService.getAllByRecordUqRegister(recordUqRegistr);
+        List<StandardCalcResultEntity> calcS = standardCalcResultService.getAllByRecordUqRegistr(recordUqRegistr);
 
         // Получаем список сохраненных результатов расчетов
         List<TestCalcResultEntity> calcT = testCalcResultService.getAllByRecordUqRegistr(recordUqRegistr);
 
         // Количество записей
-        int coincidenceCount = calcT.size();
+        int coincidenceCount = 0;
 
         boolean correct = false;
 
         // Сравниваем количество записей результатов. Если не равны, сразу фолс.
         if (calcS.size() != calcT.size()) {
-            result += "В документе RECORD_UQ = " + recordUqRegistr + " не совпвдвет количество строк с эталонным расчетом";
+            result += "В документе RECORD_UQ = " + recordUqRegistr + " не совпадает количество строк с сохраненным расчетом";
         } else {
             for (TestCalcResultEntity t : calcT) {
 
@@ -105,21 +108,18 @@ public class CalcUtility {
 
                     if (equalsCalcResult(t, calcS.get(i))) {
 
-                        coincidenceCount--;
+                        coincidenceCount++;
                         correct = true;
+                        break;
                     }
                 }
                 if (!correct) {
-                    if (result.equals("")) {
-                        result += "В документе RECORD_UQ = " + recordUqRegistr + " " + " не совпадают данные строки: " + t;
-                    } else {
-                        result += "\n" + "В документе RECORD_UQ = " + recordUqRegistr + " " + " не совпадают данные строки: " + t;
-                    }
+                        result += "\nВ документе RECORD_UQ = " + recordUqRegistr + " " + " не совпадают строки: " + t;
                 }
                 correct = false;
             }
-            if (coincidenceCount == 0) {
-                result += "Документ RECORD_UQ = " + recordUqRegistr + " расчет верный";
+            if (coincidenceCount == calcT.size()) {
+                result += "\nДокумент RECORD_UQ = " + recordUqRegistr + " расчет верный";
             }
         }
         return result;
@@ -130,15 +130,20 @@ public class CalcUtility {
         int count = 0;
         List<TestCalcResultEntity> testCalcResultEntityList = testCalcResultService.getAllByRecordUqRegistr(recordUqRegistr);
         for (TestCalcResultEntity t : testCalcResultEntityList) {
-            count += testCalcResultService.delete(t.getId());
+            count += 1;
+            testCalcResultService.delete(t.getId());
         }
         System.out.println("\nУдалено " + count + " записей");
     }
 
-    public void createDocByRecordUqRegistr(long recordUqRegistr) {
-
-        TestDocsListEntity tDocs = new TestDocsListEntity();
-
-        StandardDxRegistrEntity s = standardDxRegistrService.getByRecordUq(recordUqRegistr);
+    public void saveCalcResult(long recordUqRegistr) {
+        testCalcResultService.deleteAllByRecordUqRegistr(recordUqRegistr);
     }
+
+//    public void createDocByRecordUqRegistr(long recordUqRegistr) {
+//
+//        TestDocsListEntity tDocs = new TestDocsListEntity();
+//
+//        StandardDxRegistrEntity s = standardDxRegistrService.getByRecordUq(recordUqRegistr);
+//    }
 }

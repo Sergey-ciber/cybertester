@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Component
 public class TestComponent {
@@ -35,14 +38,13 @@ public class TestComponent {
     public void test() {
         System.out.println("Start");
 
-        System.out.println(testCalcResultService.getAllByRecordUqRegistr(124104296).size());
-        System.out.println("----------------------------------");
-        System.out.println(standardCalcResultService.getAllByRecordUqRegister(124104296).size());
+        Date date = new Date();
+        System.out.println(date.getTime());
 
-
-//        calcUtility.saveCalcResult(124104296);
-
-//        calcUtility.comparisonCalcResult( 124126597);
+//        calcUtility.saveCalcResultByRecordUqRegistr(124127850);
+//
+//
+//        System.out.println(calcUtility.comparisonCalcResultByRecordUqRegistr(124127850));
 
 //        System.out.println(standardDxRegistrService.getGuid(124124901));
 //

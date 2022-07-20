@@ -15,7 +15,7 @@ public class StandardCalcResultEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RECORD_UQ")
-    private long recordUQ;
+    private long recordUq;
 
     @Column(name = "PERIOD_BEG_DAY")
     private String periodBegDay;
@@ -27,7 +27,7 @@ public class StandardCalcResultEntity{
     private double price;
 
     @Column(name = "RECORD_UQ_REGISTR")
-    private long recordUqRegister;
+    private long recordUqRegistr;
 
     @Column(name = "PERIOD_PERCENT")
     private int periodPercent;
@@ -52,44 +52,24 @@ public class StandardCalcResultEntity{
 
     @Override
     public String toString() {
-        return "CalcResult{" +
-                "recordUQ=" + recordUQ +
-                ", periodBegDay='" + periodBegDay + '\'' +
-                ", periodEndDay='" + periodEndDay + '\'' +
-                ", price=" + price +
-                ", periodPercent=" + periodPercent +
-                ", pricesPercent=" + pricesPercent +
-                ", countDays=" + countDays +
-                ", summa=" + summa +
-                ", recordUqAlceType=" + recordUqAlceType +
-                ", recordUqBCC=" + recordUqBCC +
-                ", yearCalc=" + yearCalc +
-                '}';
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StandardCalcResultEntity that = (StandardCalcResultEntity) o;
-        return recordUQ == that.recordUQ &&
-                Double.compare(that.price, price) == 0 &&
-                recordUqRegister == that.recordUqRegister &&
-                periodPercent == that.periodPercent &&
-                Double.compare(that.pricesPercent, pricesPercent) == 0 &&
-                Double.compare(that.countDays, countDays) == 0 &&
-                Double.compare(that.summa, summa) == 0 &&
-                recordUqAlceType == that.recordUqAlceType &&
-                recordUqBCC == that.recordUqBCC &&
-                yearCalc == that.yearCalc &&
-                Objects.equals(periodBegDay, that.periodBegDay) &&
-                Objects.equals(periodEndDay, that.periodEndDay);
+        return "\nРасчет из БД ПВСО:" +
+                "\n record_uq = " + recordUq +
+                "\n Начало периода = '" + periodBegDay + '\'' +
+                "\n Конец периода = '" + periodEndDay + '\'' +
+                "\n Сумма дня = " + price +
+                "\n recordUqRegister = " + recordUqRegistr +
+                "\n Процент= " + periodPercent +
+                "\n Сумма дня с учетом процентов = " + pricesPercent +
+                "\n Количество дней = " + countDays +
+                "\n Сумма = " + summa +
+                "\n Тип пособия = " + recordUqAlceType +
+                "\n КБК = " + recordUqBCC +
+                "\n Год учета = " + yearCalc;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recordUQ, periodBegDay, periodEndDay, price, periodPercent, pricesPercent,
+        return Objects.hash(recordUq, periodBegDay, periodEndDay, price, periodPercent, pricesPercent,
                 countDays, summa, recordUqAlceType, recordUqBCC, yearCalc);
     }
 }

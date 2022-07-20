@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
@@ -28,6 +30,11 @@ public class TestCalcResultServiceImpl implements TestCalcResultService{
     }
 
     @Override
+    public void saveAll(List<TestCalcResultEntity> testCalcResultList) {
+        testCalcResultRepository.saveAll(testCalcResultList);
+    }
+
+    @Override
     public List<TestCalcResultEntity> getAllByRecordUq(long recordUq) {
         return null;
     }
@@ -43,17 +50,16 @@ public class TestCalcResultServiceImpl implements TestCalcResultService{
     }
 
     @Override
-    public boolean deleteAllByRecordUqRegistr(long recordUqRegistr) {
-        return false;
+    public void deleteAllByRecordUqRegistr(long recordUqRegistr) {
+
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean delete(long id) {
         if (testCalcResultRepository.existsById(id)) {
             testCalcResultRepository.deleteById(id);
             return true;
         }
         return false;
     }
-
 }

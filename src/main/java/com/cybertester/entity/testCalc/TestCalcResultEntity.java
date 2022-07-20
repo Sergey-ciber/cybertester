@@ -2,8 +2,6 @@ package com.cybertester.entity.testCalc;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
 
 @Setter
@@ -15,10 +13,10 @@ public class TestCalcResultEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "record_uq")
-    private Long recordUq;
+    private long recordUq;
 
     @Column(name = "period_beg_day")
     private String periodBegDay;
@@ -30,7 +28,7 @@ public class TestCalcResultEntity {
     private double price;
 
     @Column(name = "record_uq_registr", nullable=true)
-    private Long recordUqRegistr;
+    private long recordUqRegistr;
 
     @Column(name = "period_percent")
     private int periodPercent;
@@ -55,20 +53,19 @@ public class TestCalcResultEntity {
 
     @Override
     public String toString() {
-        return "TestCalcResultEntity{" +
-                "id=" + id +
-                "record_uq=" + recordUq +
-                ", periodBegDay='" + periodBegDay + '\'' +
-                ", periodEndDay='" + periodEndDay + '\'' +
-                ", price=" + price +
-                ", recordUQRegister=" + recordUqRegistr +
-                ", periodPercent=" + periodPercent +
-                ", pricesPercent=" + pricesPercent +
-                ", countDays=" + countDays +
-                ", summa=" + summa +
-                ", recordUqAlceType=" + recordUqAlceType +
-                ", recordUqBCC=" + recordUqBCC +
-                ", yearCalc=" + yearCalc +
-                '}';
+        return "\nРасчет из тестовой БД" +
+                "\n ИД =" + id +
+                "\n record_uq=" + recordUq +
+                "\n Начало периода ='" + periodBegDay + '\'' +
+                "\n Конец периода ='" + periodEndDay + '\'' +
+                "\n Сумма дня =" + price +
+                "\n recordUQRegister=" + recordUqRegistr +
+                "\n Процент=" + periodPercent +
+                "\n Сумма дня с учетом процентов=" + pricesPercent +
+                "\n Количество дней=" + countDays +
+                "\n Сумма=" + summa +
+                "\n Тип пособия =" + recordUqAlceType +
+                "\n КБК =" + recordUqBCC +
+                "\n Год учета =" + yearCalc;
     }
 }

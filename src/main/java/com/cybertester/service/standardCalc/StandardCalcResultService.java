@@ -8,7 +8,7 @@ import java.util.List;
 public interface StandardCalcResultService {
 
     // Получаем список сущностей по RECORD_UQ_REGISTR
-    List<StandardCalcResultEntity> getAllByRecordUqRegister(long recordUQRegister);
+    List<StandardCalcResultEntity> getAllByRecordUqRegistr(long recordUQRegister);
 
     // Получаем список сущностей по RECORD_UQ
     List<StandardCalcResultEntity> getAllByRecordUq(long recordU);

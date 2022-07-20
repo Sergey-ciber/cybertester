@@ -19,9 +19,9 @@ public class StandardCalcResultServiceImpl implements StandardCalcResultService 
     }
 
     @Override
-    public List<StandardCalcResultEntity> getAllByRecordUqRegister(long recordUqRegister) {
+    public List<StandardCalcResultEntity> getAllByRecordUqRegistr(long recordUqRegistr) {
 
-        return standardCalcResultRepository.getAllByRecordUqRegister(recordUqRegister);
+        return standardCalcResultRepository.getAllByRecordUqRegistr(recordUqRegistr);
     }
 
     @Override
