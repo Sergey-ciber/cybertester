@@ -3,6 +3,7 @@ package com.cybertester.entity.testCalc;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -51,6 +52,9 @@ public class TestCalcResultEntity {
     @Column(name = "year_calc")
     private int yearCalc;
 
+    @Column(name = "create_date")
+    Date createDate;
+
     @Override
     public String toString() {
         return "\nРасчет из тестовой БД" +
@@ -66,6 +70,7 @@ public class TestCalcResultEntity {
                 "\n Сумма=" + summa +
                 "\n Тип пособия =" + recordUqAlceType +
                 "\n КБК =" + recordUqBCC +
-                "\n Год учета =" + yearCalc;
+                "\n Год учета =" + yearCalc +
+                "\n Дата создания записи = " + createDate;
     }
 }

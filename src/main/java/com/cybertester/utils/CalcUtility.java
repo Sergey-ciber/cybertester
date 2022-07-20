@@ -1,16 +1,16 @@
 package com.cybertester.utils;
 
 import com.cybertester.entity.standardCalc.StandardCalcResultEntity;
-import com.cybertester.entity.standardCalc.StandardDxRegistrEntity;
+import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import com.cybertester.entity.testCalc.TestCalcResultEntity;
-import com.cybertester.entity.testCalc.TestDocsListEntity;
 import com.cybertester.service.standardCalc.StandardCalcResultService;
 import com.cybertester.service.standardCalc.StandardDxRegistrService;
 import com.cybertester.service.testCalc.TestCalcResultService;
-import com.cybertester.service.testCalc.TestDocsListService;
+import com.cybertester.service.testCalc.TestCalcCheckListService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -19,13 +19,13 @@ public class CalcUtility {
     private final TestCalcResultService testCalcResultService;
     private final StandardCalcResultService standardCalcResultService;
     private final StandardDxRegistrService standardDxRegistrService;
-    private final TestDocsListService testDocsListService;
+    private final TestCalcCheckListService testCalcCheckListService;
 
-    public CalcUtility(TestCalcResultService testCalcResultService, StandardCalcResultService standardCalcResultService, StandardDxRegistrService standardDxRegistrService, TestDocsListService testDocsListService) {
+    public CalcUtility(TestCalcResultService testCalcResultService, StandardCalcResultService standardCalcResultService, StandardDxRegistrService standardDxRegistrService, TestCalcCheckListService testCalcCheckListService) {
         this.testCalcResultService = testCalcResultService;
         this.standardCalcResultService = standardCalcResultService;
         this.standardDxRegistrService = standardDxRegistrService;
-        this.testDocsListService = testDocsListService;
+        this.testCalcCheckListService = testCalcCheckListService;
     }
 
     // Получаем RECORD_UQ по GUID_INPUT из ПВСО БД
@@ -56,6 +56,7 @@ public class CalcUtility {
             t.setRecordUqAlceType(s.getRecordUqAlceType());
             t.setRecordUqBCC(s.getRecordUqBCC());
             t.setYearCalc(s.getYearCalc());
+            t.setCreateDate(new Date());
             System.out.println("\nДобавлена новая запись");
             System.out.println(s);
             testCalcList.add(t);
@@ -114,7 +115,7 @@ public class CalcUtility {
                     }
                 }
                 if (!correct) {
-                        result += "\nВ документе RECORD_UQ = " + recordUqRegistr + " " + " не совпадают строки: " + t;
+                    result += "\nВ документе RECORD_UQ = " + recordUqRegistr + " " + " не совпадают строки: " + t;
                 }
                 correct = false;
             }
@@ -140,10 +141,13 @@ public class CalcUtility {
         testCalcResultService.deleteAllByRecordUqRegistr(recordUqRegistr);
     }
 
-//    public void createDocByRecordUqRegistr(long recordUqRegistr) {
-//
-//        TestDocsListEntity tDocs = new TestDocsListEntity();
-//
-//        StandardDxRegistrEntity s = standardDxRegistrService.getByRecordUq(recordUqRegistr);
-//    }
+
+    void goCalcCheckList(List<TestCalcCheckListEntity> checkList) {
+
+        for(TestCalcCheckListEntity cl : checkList) {
+
+            comparisonCalcResultByRecordUqRegistr(cl.getRecordUqRegistr());
+        }
+
+    }
 }
