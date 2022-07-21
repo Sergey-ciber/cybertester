@@ -12,13 +12,13 @@ public interface TestCalcCheckListRepository extends JpaRepository<TestCalcCheck
     // Получаем список сущностей по RECORD_UQ
     List<TestCalcCheckListEntity> getAllByRecordUqRegistr(long recordUqRegistr);
 
-
     void deleteAllByRecordUqRegistr(long recordUqRegistr);
-
 
     // Получаем первую сущность по RECORD_UQ
     TestCalcCheckListEntity getFirstByRecordUqRegistr(long recordUqRegistr);
 
     List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck);
+
+    TestCalcCheckListEntity getById(long id);
 
 }

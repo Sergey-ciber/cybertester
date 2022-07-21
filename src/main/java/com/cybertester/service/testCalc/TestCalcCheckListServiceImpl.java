@@ -20,7 +20,7 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
 
     @Override
     public void create(TestCalcCheckListEntity testCalcCheckListEntity) {
-
+        testCalcCheckListRepository.save(testCalcCheckListEntity);
     }
 
     @Override
@@ -49,6 +49,11 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
     }
 
     @Override
+    public TestCalcCheckListEntity getFirstById(long id) {
+        return testCalcCheckListRepository.getById(id);
+    }
+
+    @Override
     public void update(TestCalcCheckListEntity testCalcCheckListEntity, long id) {
         testCalcCheckListEntity.setId(id);
         testCalcCheckListRepository.save(testCalcCheckListEntity);
@@ -57,6 +62,19 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
     @Override
     public List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck) {
         return testCalcCheckListRepository.getAllByDoCheck(doCheck);
+    }
+
+    @Override
+    public void deleteByRecordUqRegistr(long recordUqRegistr) {
+    }
+
+    @Override
+    public boolean delete(long id) {
+        if (testCalcCheckListRepository.existsById(id)) {
+            testCalcCheckListRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
 

@@ -1,6 +1,7 @@
 package com.cybertester.utils;
 
 import com.cybertester.entity.standardCalc.StandardCalcResultEntity;
+import com.cybertester.entity.standardCalc.StandardDxRegistrEntity;
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import com.cybertester.entity.testCalc.TestCalcResultEntity;
 import com.cybertester.service.standardCalc.StandardCalcResultService;
@@ -84,15 +85,17 @@ public class CalcUtility {
 
     }
 
-    public String comparisonCalcResultByRecordUqRegistr(long recordUqRegistr) {
+    public void comparisonCalcResultByCheckListElement(TestCalcCheckListEntity checkListElement) {
+
+        TestCalcCheckListEntity checkListEl = checkListElement;
 
         String result = "";
 
         // Получаем список результатов расчета по RECORD_UQ_REGISTR
-        List<StandardCalcResultEntity> calcS = standardCalcResultService.getAllByRecordUqRegistr(recordUqRegistr);
+        List<StandardCalcResultEntity> calcS = standardCalcResultService.getAllByRecordUqRegistr(checkListElement.getRecordUqRegistr());
 
         // Получаем список сохраненных результатов расчетов
-        List<TestCalcResultEntity> calcT = testCalcResultService.getAllByRecordUqRegistr(recordUqRegistr);
+        List<TestCalcResultEntity> calcT = testCalcResultService.getAllByRecordUqRegistr(checkListElement.getRecordUqRegistr());
 
         // Количество записей
         int coincidenceCount = 0;
@@ -101,7 +104,8 @@ public class CalcUtility {
 
         // Сравниваем количество записей результатов. Если не равны, сразу фолс.
         if (calcS.size() != calcT.size()) {
-            result += "В документе RECORD_UQ = " + recordUqRegistr + " не совпадает количество строк с сохраненным расчетом";
+            result += "В документе RECORD_UQ = " + checkListEl.getRecordUqRegistr() + " не совпадает количество строк с сохраненным расчетом";
+            checkListEl.setCalcResult(0);
         } else {
             for (TestCalcResultEntity t : calcT) {
 
@@ -115,18 +119,22 @@ public class CalcUtility {
                     }
                 }
                 if (!correct) {
-                    result += "\nВ документе RECORD_UQ = " + recordUqRegistr + " " + " не совпадают строки: " + t;
+                    result += "\nВ документе RECORD_UQ = " + checkListEl.getRecordUqRegistr() + " " + " не совпадают строки: " + t;
                 }
                 correct = false;
+                checkListEl.setCalcResult(0);
             }
             if (coincidenceCount == calcT.size()) {
-                result += "\nДокумент RECORD_UQ = " + recordUqRegistr + " расчет верный";
+                result += "\nДокумент RECORD_UQ = " + checkListEl.getRecordUqRegistr() + " расчет верный";
+                checkListEl.setCalcResult(1);
             }
         }
-        return result;
+        checkListEl.setMessage(result);
+
+        testCalcCheckListService.update(checkListEl, checkListEl.getId());
     }
 
-    // Удаляем все записи по RECORD_UQ_REGISTR и возвращаем количество удаленных записей
+    // Удаляем все записи результатов расчетов из тестовой БД по RECORD_UQ_REGISTR
     public void deleteAllTestCalcResultByRecordUqRegistr(long recordUqRegistr) {
         int count = 0;
         List<TestCalcResultEntity> testCalcResultEntityList = testCalcResultService.getAllByRecordUqRegistr(recordUqRegistr);
@@ -142,12 +150,59 @@ public class CalcUtility {
     }
 
 
-    void goCalcCheckList(List<TestCalcCheckListEntity> checkList) {
+    // Добавляе в чек личт элемнт из DX_REGISTR по RECORD_UQ
+    public void addDocToCalcCheckList(long recordUqRegistr) {
 
-        for(TestCalcCheckListEntity cl : checkList) {
+        StandardDxRegistrEntity sDxRegistr = standardDxRegistrService.getByRecordUq(recordUqRegistr);
 
-            comparisonCalcResultByRecordUqRegistr(cl.getRecordUqRegistr());
+        if (sDxRegistr == null) {
+            System.out.println("Запись record_uq = '" + recordUqRegistr + "' не найдена");
+        } else {
+            TestCalcCheckListEntity tc = new TestCalcCheckListEntity();
+            tc.setRecordUqRegistr(recordUqRegistr);
+            tc.setGuidInput(sDxRegistr.getGuidInput());
+            tc.setDoCheck(1);
+
+            TestCalcCheckListEntity t = testCalcCheckListService.getFirstByRecordUqRegistr(recordUqRegistr);
+
+            if (t != null) {
+                testCalcCheckListService.delete(t.getId());
+            }
+
+            testCalcCheckListService.create(tc);
+
+            saveCalcResultByRecordUqRegistr(recordUqRegistr);
         }
+    }
 
+    // Берем элемнты из чек листа с признаком doCheck = 1 и проверяем их
+    public void goCalcCheckList() {
+
+        List<TestCalcCheckListEntity> checkList = testCalcCheckListService.getAllByDoCheck(1);
+        for (TestCalcCheckListEntity cElement : checkList) {
+            if (cElement.getDoCheck() == 1)
+                comparisonCalcResultByCheckListElement(cElement);
+        }
+    }
+
+    // Получаем список документов из DX_REGISTR, преобразуем строку String в массив long
+    public long[] convertStringRecordUqRegistrToArr(String recordUqRegistr){
+
+        String[] StringRecordUqRegistrArr = recordUqRegistr.split(",");
+        long[] longStringRecordUqRegistrArr = new long[StringRecordUqRegistrArr.length];
+        for (int i = 0; i <StringRecordUqRegistrArr.length; i++){
+            longStringRecordUqRegistrArr[i] = Long.parseLong(StringRecordUqRegistrArr[i]);
+        }
+        return longStringRecordUqRegistrArr;
+    }
+
+    // Добавляем доки в чек лист из списка по RECORD_UQ_REGISTR
+    public void addListRecordUqStringToCalcCheckList(String listRecordUq){
+
+        long[] recordUqArr = convertStringRecordUqRegistrToArr(listRecordUq);
+
+        for (long recordUq : recordUqArr){
+            addDocToCalcCheckList(recordUq);
+        }
     }
 }

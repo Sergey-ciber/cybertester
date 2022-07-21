@@ -36,26 +36,9 @@ public class TestComponent {
     public void test() {
         System.out.println("Start");
 
-        TestCalcCheckListEntity td = new TestCalcCheckListEntity();
-        td.setRecordUqRegistr(1234567);
-        td.setGuidInput("guid");
-        td.setDoCheck(2);
+//        calcUtility.addListRecordUqStringToCalcCheckList("124107991,124107990");
 
-        testCalcCheckListService.update(td, 1);
-//        calcUtility.saveCalcResultByRecordUqRegistr(124127782);
-//
-//
-//        System.out.println(calcUtility.comparisonCalcResultByRecordUqRegistr(124127782));
-
-//        System.out.println(standardDxRegistrService.getGuid(124124901));
-//
-//        pvsoManagers.deleteDxRegistr("E32136B2A1AFBEA7E0530813E00AD6D0");
-//
-//        List<StandardCalcResultEntity> standardList = standardCalcResultService.getAllByRecordUQRegister(124123239);
-//
-//        System.out.println("В базе ПВСО найдено " + standardList.size() + " записей");
-
-
+        calcUtility.goCalcCheckList();
         System.out.println("End");
     }
 }

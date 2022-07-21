@@ -18,8 +18,10 @@ public interface StandardDxRegistrRepository extends JpaRepository<StandardDxReg
         StandardDxRegistrEntity getFirstByGuidInput(String guidInput);
 
         // Получаем список сущностей по RECORD_UQ
-        List<StandardDxRegistrEntity> getAllByRecordUq(Long recordU);
+        List<StandardDxRegistrEntity> getAllByRecordUq(long recordUq);
 
+        StandardDxRegistrEntity getFirstByRecordUq(long recordUq);
 
+        StandardDxRegistrEntity getByRecordUq(long recordUq);
 
 }

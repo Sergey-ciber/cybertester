@@ -8,28 +8,28 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "test_docs_list", schema = "public")
+@Table(name = "calc_check_list", schema = "public")
 public class TestCalcCheckListEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "guid_input")
-    String guidInput;
+    private String guidInput;
 
     @Column(name = "do_check")
-    int doCheck;
+    private int doCheck;
 
     @Column(name = "record_uq_registr")
-    long recordUqRegistr;
+    private long recordUqRegistr;
 
     @Column(name = "calc_result")
-    int calcResult;
+    private int calcResult;
 
     @Column(name = "message")
-    String message;
+    private String message;
 
     @Override
     public String toString() {

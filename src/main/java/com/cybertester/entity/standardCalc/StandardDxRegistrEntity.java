@@ -20,4 +20,11 @@ public class StandardDxRegistrEntity {
     @Column(name = "GUID_INPUT")
     String guidInput;
 
+    @Override
+    public String toString() {
+        return "StandardDxRegistrEntity{" +
+                "recordUq=" + recordUq +
+                ", guidInput='" + guidInput + '\'' +
+                '}';
+    }
 }

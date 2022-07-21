@@ -1,7 +1,6 @@
 package com.cybertester.service.standardCalc;
 
 import com.cybertester.entity.standardCalc.StandardDxRegistrEntity;
-import org.springframework.data.repository.query.Param;
 
 public interface StandardDxRegistrService {
 
@@ -9,4 +8,7 @@ public interface StandardDxRegistrService {
 
     StandardDxRegistrEntity getFirstByGuidInput(String guidInput);
 
+    StandardDxRegistrEntity getFirstByRecordUq(long recordUq);
+
+    StandardDxRegistrEntity getByRecordUq(long recordUq);
 }

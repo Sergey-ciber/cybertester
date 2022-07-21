@@ -51,7 +51,6 @@ public class TestCalcResultServiceImpl implements TestCalcResultService{
 
     @Override
     public void deleteAllByRecordUqRegistr(long recordUqRegistr) {
-
     }
 
     @Override

@@ -20,7 +20,14 @@ public interface TestCalcCheckListService {
     //Удаляем запись по ID
     boolean deleteById(long id);
 
+    TestCalcCheckListEntity getFirstById(long id);
+
     void update(TestCalcCheckListEntity testCalcCheckListEntity, long id);
 
     List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck);
+
+    void deleteByRecordUqRegistr(long recordUqRegistr);
+
+    //Удаляем запись по ID
+    boolean delete(long id);
 }

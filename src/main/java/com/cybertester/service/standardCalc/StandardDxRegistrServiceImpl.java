@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class StandardDxRegistrServiceImpl implements StandardDxRegistrService {
 
     private final StandardDxRegistrRepository standardDxRegistrRepository;
@@ -25,7 +24,18 @@ public class StandardDxRegistrServiceImpl implements StandardDxRegistrService {
 
     @Override
     public StandardDxRegistrEntity getFirstByGuidInput(String guidInput) {
-
         return standardDxRegistrRepository.getFirstByGuidInput(guidInput);
     }
+
+    @Override
+    public StandardDxRegistrEntity getFirstByRecordUq(long recordUq) {
+        return standardDxRegistrRepository.getFirstByRecordUq(recordUq);
+    }
+
+    @Override
+    public StandardDxRegistrEntity getByRecordUq(long recordUq) {
+        return standardDxRegistrRepository.getByRecordUq(recordUq);
+    }
+
+
 }
