@@ -1,0 +1,6 @@
+.mainField{
+    grid-area: mainField;
+    background-color: #9544f1;
+    display: grid;
+    grid-template-rows: auto;
+}

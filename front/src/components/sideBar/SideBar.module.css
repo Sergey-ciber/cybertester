@@ -1,0 +1,7 @@
+.sideBar{
+    display: grid;
+    grid-area: sideBar;
+    background-color: #6be5dc;
+    grid-template-areas: "heading" "testList";
+    grid-template-rows: 10% 30%;
+}
