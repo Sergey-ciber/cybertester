@@ -2,4 +2,6 @@
     display: grid;
     grid-area: testFieldHeader;
     justify-items: center;
+    margin: 1%;
+    background-color: gold;
 }

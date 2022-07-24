@@ -1,11 +1,14 @@
 import React from "react";
 import style from './Content.module.css'
+import DocList from "./docList/DocList";
+import DocErrors from "./docErrors/DocErrors";
 
 const Content = () => {
 
-    return(
+    return (
         <div className={style.content}>
-        <h1>Содержание теста</h1>
+            <DocList/>
+            <DocErrors/>
         </div>
     )
 }
