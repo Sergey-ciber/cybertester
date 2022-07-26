@@ -6,8 +6,8 @@ const TestList = () => {
 
     return(
         <div className={style.testList}>
-            <TestElement link={"/calcTest"} testName={"Тест расчета"}/>
-            <TestElement link={"/loadTest"} testName={"Тест загрузки"}/>
+            <TestElement link={"/test/calc"} testName={"Тест расчета"}/>
+            <TestElement link={"/test/load"} testName={"Тест загрузки"}/>
         </div>
     )
 }

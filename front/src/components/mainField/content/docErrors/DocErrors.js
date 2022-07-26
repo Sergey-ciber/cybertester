@@ -2,13 +2,12 @@ import React from "react";
 import style from './DocErrors.module.css'
 import {useParams} from "react-router-dom";
 
-const DocErrors = () => {
-    console.log(useParams())
+const DocErrors = (props) => {
 
-    let { id } = useParams();
-
+    let param = useParams();
     return (
         <div className={style.docErrors}>
+            <div>ID = {param.id}</div>
             <div>
                 В документе RECORD_UQ = 124107990  не совпадают строки:
                 Расчет из тестовой БД

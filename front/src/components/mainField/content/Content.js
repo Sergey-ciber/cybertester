@@ -2,13 +2,24 @@ import React from "react";
 import style from './Content.module.css'
 import DocList from "./docList/DocList";
 import DocErrors from "./docErrors/DocErrors";
+import {useParams} from "react-router-dom";
+import AddDoc from "./addDoc/AddDoc";
 
-const Content = () => {
+const Content = (props) => {
+
+    let param = useParams();
+    let el = () => {
+        if (param.id === "addDoc") {
+            return <AddDoc addDoc={props.addDoc} inputText={props.inputText} recordUqText={props.calc.recordUqText}/>
+        } else {
+            return <DocErrors/>
+        }
+    }
 
     return (
         <div className={style.content}>
-            <DocList/>
-            <DocErrors/>
+            <DocList calc={props.calc}/>
+            {el()}
         </div>
     )
 }
