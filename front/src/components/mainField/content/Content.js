@@ -10,7 +10,7 @@ const Content = (props) => {
     let param = useParams();
     let el = () => {
         if (param.id === "addDoc") {
-            return <AddDoc addDoc={props.addDoc} inputText={props.inputText} recordUqText={props.calc.recordUqText}/>
+            return <AddDoc dispatch={props.dispatch} recordUqText={props.calc.recordUqText}/>
         } else {
             return <DocErrors/>
         }

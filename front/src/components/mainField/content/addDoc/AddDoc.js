@@ -1,18 +1,16 @@
 import React from "react";
 import style from './AddDoc.module.css'
 
-const AddDoc = (props) => {
+const AddDoc = (props) => {debugger
 
     let addDocRef = React.createRef();
 
     let onAddDoc = () => {
-        props.addDoc(addDocRef.current.value)
-        addDocRef.current.value = ""
+        props.dispatch({type: 'ADD-DOC'})
     }
 
     let inputText = () => {
-        console.log(addDocRef.current.value)
-        props.inputText(addDocRef.current.value)
+        props.dispatch({type: 'UPDATE-RECORD-UQ-TEXT', text: addDocRef.current.value})
     }
 
     return (

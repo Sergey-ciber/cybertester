@@ -9,7 +9,7 @@ const MainField = (props) => {
         <div className={style.mainField}>
             <Routes>
                 <Route path={"/test/:name"} element={<TestField calc={props.calc}/>}/>
-                <Route path={"/test/:name/:id"} element={<TestField calc={props.calc} inputText={props.inputText} addDoc={props.addDoc}/>}/>
+                <Route path={"/test/:name/:id"} element={<TestField calc={props.calc} dispatch={props.dispatch}/>}/>
             </Routes>
         </div>
     )
