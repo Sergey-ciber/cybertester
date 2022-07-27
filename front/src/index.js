@@ -2,22 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import store from "./redax/store";
+import store from './redax/reduxStore';
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+console.log(store.getState())
+
 let rerenderEntireTree = (state) => {
     root.render(
         <BrowserRouter>
-            <App calc={state.calc} dispatch={store.dispatch.bind(store)}/>
+            <App calc={state.calcTestData} dispatch={store.dispatch.bind(store)}/>
         </BrowserRouter>
     );
 }
 
 rerenderEntireTree(store.getState())
-store.subscribe(rerenderEntireTree)
+store.subscribe(() => {rerenderEntireTree(store.getState())})
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
