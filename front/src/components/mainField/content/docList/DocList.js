@@ -9,9 +9,8 @@ const DocList = (props) => {
         <div className={style.docList}>
             <DocHeader/>
             {
-                props.calc.docList.map(doc =>
-                    <Doc id={doc.id} recordUq={doc.recordUq} guidInput={doc.guidInput} doCheck={doc.doCheck}
-                         date={doc.date} verified={doc.verified}/>
+                props.docList.map(docEl =>
+                    <Doc docEl={docEl}/>
                 )
             }
         </div>

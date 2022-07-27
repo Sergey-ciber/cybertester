@@ -42,7 +42,7 @@ let initialState = {
 const calcReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case UPDATE_RECORD_UQ_TEXT: {
+        case UPDATE_RECORD_UQ_TEXT: {debugger
         state.recordUqText = action.text
             break
         }

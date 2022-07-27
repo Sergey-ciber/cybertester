@@ -6,7 +6,7 @@ const TestElement = (props) => {
 
     return(
         <div className={style.testElement}>
-            <NavLink to={props.link} activeClassName={style.active}>{props.testName}</NavLink>
+            <NavLink to={props.link} >{props.testName}</NavLink>
         </div>
     )
 }

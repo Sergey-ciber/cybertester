@@ -8,8 +8,8 @@ const MainField = (props) => {
     return (
         <div className={style.mainField}>
             <Routes>
-                <Route path={"/test/:name"} element={<TestField calc={props.calc}/>}/>
-                <Route path={"/test/:name/:id"} element={<TestField calc={props.calc} dispatch={props.dispatch}/>}/>
+                <Route path={"/test/:name"} element={<TestField />}/>
+                <Route path={"/test/:name/:id"} element={<TestField />}/>
             </Routes>
         </div>
     )

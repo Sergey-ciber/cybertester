@@ -3,20 +3,16 @@ import style from './AddDoc.module.css'
 import {addDocActionCreator, updateRecordUqTextActionCreator} from "../../../../redax/calcReducer";
 
 
-const AddDoc = (props) => {
+const AddDoc = (props) => {debugger
 
     let addDocRef = React.createRef();
 
     let onAddDoc = () => {
-        props.dispatch(
-            addDocActionCreator()
-        )
+        props.onAddDoc()
     }
 
     let updateRecordUqText = () => {
-        props.dispatch(
-            updateRecordUqTextActionCreator(addDocRef.current.value)
-        )
+        props.updateRecordUqText(addDocRef.current.value);
     }
 
     return (

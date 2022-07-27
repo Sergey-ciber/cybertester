@@ -10,7 +10,7 @@ function App(props) {
         <div className="App">
             <Header/>
             <SideBar/>
-            <MainField calc={props.calc} dispatch={props.dispatch}/>
+            <MainField/>
         </div>
     );
 }

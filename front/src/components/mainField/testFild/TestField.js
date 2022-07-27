@@ -10,7 +10,7 @@ const TestField = (props) => {
     return(
         <div className={style.testField}>
         <TestFieldHeader testName={useParams()}/>
-        <Content calc={props.calc} dispatch={props.dispatch}/>
+        <Content />
         </div>
     )
 }
