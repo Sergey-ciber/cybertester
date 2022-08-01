@@ -8,10 +8,12 @@ const TestFieldHeader = (props) => {
 
     return(
         <div className={style.testFieldHeader}>
-            <NavLink to={"/test/calc/addDoc"}>
+            <NavLink to={"/test/calc/addDoc"} className={style.navLink}>
                 <h5>Добавить документ в чек лист</h5>
             </NavLink>
+            <div className={style.testName}>
             <h1>{testName.name}</h1>
+            </div>
         </div>
     )
     // return(

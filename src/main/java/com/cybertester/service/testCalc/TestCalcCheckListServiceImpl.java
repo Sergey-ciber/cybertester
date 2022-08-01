@@ -77,5 +77,10 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
         return false;
     }
 
+    @Override
+    public List<TestCalcCheckListEntity> getAll() {
+        return testCalcCheckListRepository.findAll();
+    }
+
 
 }

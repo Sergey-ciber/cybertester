@@ -3,6 +3,24 @@
     grid-area: testFieldHeader;
     /*justify-items: center;*/
     margin: 1%;
-    background-color: gold;
-    grid-template-columns: 50% 50%;
+    /*background-color: gold;*/
+    grid-template-columns: 25% 75%;
+    color: white;
+}
+.testFieldHeader .navLink{
+    display: grid;
+    border: gold solid;
+    justify-items: center;
+    align-content: center;
+}
+
+.testFieldHeader a{
+    color: gold;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+.testName{
+    display: grid;
+    justify-items: center;
 }

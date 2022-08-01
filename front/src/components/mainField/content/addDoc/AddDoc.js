@@ -1,9 +1,8 @@
 import React from "react";
 import style from './AddDoc.module.css'
-import {addDocActionCreator, updateRecordUqTextActionCreator} from "../../../../redax/calcReducer";
 
 
-const AddDoc = (props) => {debugger
+const AddDoc = (props) => {
 
     let addDocRef = React.createRef();
 

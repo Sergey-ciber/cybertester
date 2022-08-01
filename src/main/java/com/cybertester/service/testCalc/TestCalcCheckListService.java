@@ -30,4 +30,7 @@ public interface TestCalcCheckListService {
 
     //Удаляем запись по ID
     boolean delete(long id);
+
+    //Получаем все документы из списка
+    public List<TestCalcCheckListEntity> getAll();
 }

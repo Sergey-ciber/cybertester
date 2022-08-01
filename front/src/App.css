@@ -7,7 +7,7 @@
 .App {
   display: grid;
   grid-template-areas: "head head" "sideBar mainField";
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: 75px 1fr;
   grid-template-columns: 2fr 10fr;
   min-height: 1000px;
 }

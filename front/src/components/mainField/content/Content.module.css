@@ -3,4 +3,5 @@
     display: grid;
     grid-template-columns: 7fr 5fr;
     margin-left: 2%;
+    background-color: rgba(250,250,250, 0.8);
 }

@@ -1,4 +1,5 @@
 .head{
     grid-area: head;
-    background-color: #f32383;
+    background-image: url('./header-cat4.jpg');
+    background-size: inherit;
 }

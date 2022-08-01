@@ -1,6 +1,6 @@
 .mainField{
     grid-area: mainField;
-    background-color: #9544f1;
+    background-color: #0a0a0a;
     display: grid;
     grid-template-rows: auto;
 }

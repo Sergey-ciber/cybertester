@@ -1,6 +1,7 @@
 .testField{
-    background-color: #9544f1;
+    background-color: #030007;
     display: grid;
     grid-template-rows: 7% auto;
     grid-template-areas: "testFieldHeader" "content";
+    padding: 1%;
 }

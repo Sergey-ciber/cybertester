@@ -1,7 +1,9 @@
 .sideBar{
+    padding-top: 1%;
     display: grid;
     grid-area: sideBar;
-    background-color: #6be5dc;
+    background-color: #0a0a0a;
     grid-template-areas: "heading" "testList";
     grid-template-rows: 10% 30%;
+    /*border: gold solid;*/
 }

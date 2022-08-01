@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 const Doc = (props) => {debugger
 
     let checkbox = () => {
-        if (props.docEl.doCheck === true) {
+        if (props.docEl.doCheck === 1) {
            return <input type="checkbox" id="doCheck" name="doCheck" defaultChecked={"checked"}/>
         } else{
             return <input type="checkbox" id="doCheck" name="doCheck" />
@@ -13,13 +13,13 @@ const Doc = (props) => {debugger
     }
 
     let color = () => {
-        if (props.docEl.verified === true) {return style.docLinkBlack} else {
+        if (props.docEl.calcResult === 1) {return style.docLinkBlack} else {
             return style.docLinkRed
         }
     }
 
     return (
-        <div key={props.docEl.id} className={style.doc}>
+        <div key={props.key} className={style.doc}>
             <NavLink className={color()} to={`/test/calc/${props.docEl.id}`}>
                 <h5>{props.docEl.id}</h5>
                 <h5>{props.docEl.recordUq}</h5>
