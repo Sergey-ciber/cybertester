@@ -10,6 +10,11 @@ import com.cybertester.service.testCalc.TestCalcResultService;
 import com.cybertester.service.testCalc.TestCalcCheckListService;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -130,6 +135,11 @@ public class CalcUtility {
             }
         }
         checkListEl.setMessage(result);
+
+        // Дата запуска сравнения
+        String checkDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss"));
+
+        checkListEl.setCheckDate(checkDate);
 
         testCalcCheckListService.update(checkListEl, checkListEl.getId());
     }

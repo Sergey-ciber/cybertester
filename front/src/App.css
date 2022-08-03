@@ -8,7 +8,7 @@
   display: grid;
   grid-template-areas: "head head" "sideBar mainField";
   grid-template-rows: 75px 1fr;
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: 12% 88%;
   min-height: 1000px;
 }
 

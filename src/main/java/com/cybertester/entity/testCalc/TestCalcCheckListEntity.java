@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -24,6 +25,9 @@ public class TestCalcCheckListEntity {
 
     @Column(name = "record_uq_registr")
     private long recordUqRegistr;
+
+    @Column(name = "check_date")
+    private String checkDate;
 
     @Column(name = "calc_result")
     private int calcResult;

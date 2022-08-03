@@ -1,6 +1,8 @@
 import React from "react";
 import style from './Doc.module.css'
 import {NavLink} from "react-router-dom";
+import greenCheckMark from '../../../../../assets/greenСheckMark.png'
+import redCheckMark from '../../../../../assets/redCheckMark.png'
 
 const Doc = (props) => {debugger
 
@@ -12,19 +14,21 @@ const Doc = (props) => {debugger
         }
     }
 
-    let color = () => {
-        if (props.docEl.calcResult === 1) {return style.docLinkBlack} else {
-            return style.docLinkRed
+    let checkMarc = () => {
+        if (props.docEl.calcResult === 1) {return <img src={greenCheckMark}/>} else {
+            return <img src={redCheckMark}/>
         }
     }
 
     return (
         <div key={props.key} className={style.doc}>
-            <NavLink className={color()} to={`/test/calc/${props.docEl.id}`}>
+            <NavLink className={style.docLink} to={`/test/calc/${props.docEl.id}`}>
                 <h5>{props.docEl.id}</h5>
-                <h5>{props.docEl.recordUq}</h5>
+                <h5>{props.docEl.recordUqRegistr}</h5>
                 <h5>{props.docEl.guidInput}</h5>
+                <h5>{props.docEl.checkDate}</h5>
                 <h5>{props.docEl.date}</h5>
+                {checkMarc()}
             </NavLink>
             <div className={style.checkBox}>
                 {checkbox()}

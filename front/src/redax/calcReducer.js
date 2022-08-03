@@ -80,7 +80,7 @@ export let addDoc = () => {
     return {type: ADD_DOC}
 }
 
-export let setDocList = (docList) => {debugger
+export let setDocList = (docList) => {
     return {type: SET_DOC_LIST, docList}
 }
 

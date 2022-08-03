@@ -1,7 +1,7 @@
 .content{
     grid-area: content;
     display: grid;
-    grid-template-columns: 7fr 5fr;
+    grid-template-columns: 8fr 4fr;
     margin-left: 2%;
     background-color: rgba(250,250,250, 0.8);
 }

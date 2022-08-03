@@ -34,4 +34,9 @@ public class CalcController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/checkDocs")
+    public void checkDocs() {
+        calcUtility.goCalcCheckList();
+    }
+
 }
