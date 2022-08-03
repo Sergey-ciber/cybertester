@@ -5,26 +5,34 @@ import {useParams} from "react-router-dom";
 const DocErrors = (props) => {
 
     let param = useParams();
+
+    let el = () => {
+        let docInfo = props.docList.filter(el => {
+            return (el.id === Number(param.id))
+        })
+        return (docInfo[0]) ? docInfo[0] :
+            {
+                id: 0,
+                recordUqRegistr: 0,
+                guidInput: "",
+                doCheck: true,
+                date: "",
+                verified: true,
+                message: ""
+            }
+    }
+    let docInfoEl = el()
+
+    console.log(docInfoEl)
+
+
     return (
         <div className={style.docErrors}>
             <div>ID = {param.id}</div>
-            <div>
-                В документе RECORD_UQ = 124107990  не совпадают строки:
-                Расчет из тестовой БД
-                ИД =101
-                record_uq=92693424
-                Начало периода ='2022-06-04 00:00:00'
-                Конец периода ='2022-06-30 00:00:00'
-                Сумма дня =1000.0
-                recordUQRegister=124107990
-                Процент=100
-                Сумма дня с учетом процентов=1000.0
-                Количество дней=27.0
-                Сумма=27000.01
-                Тип пособия =648
-                КБК =25442
-                Год учета =2022
-                Дата создания записи = 2022-07-21 00:00:00.0</div>
+            <div>RECORD UQ = {docInfoEl.recordUqRegistr}</div>
+            <div>GUID INPUT = {docInfoEl.guidInput}</div>
+            <div>Результат расчета {(docInfoEl.calcResult === 1) ? "верный" : "не верный"}</div>
+            <div>Список ошибок: <br/> {docInfoEl.message}</div>
         </div>
     )
 }

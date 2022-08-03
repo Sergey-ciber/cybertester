@@ -5,10 +5,7 @@ import com.cybertester.service.testCalc.TestCalcCheckListService;
 import com.cybertester.utils.CalcUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,4 +36,13 @@ public class CalcController {
         calcUtility.goCalcCheckList();
     }
 
+    @GetMapping("/addDocs")
+    public ResponseEntity<List<TestCalcCheckListEntity>> addDoc (@RequestParam("recordUqDocs") String recordUqDocs) {
+        calcUtility.addListRecordUqStringToCalcCheckList(recordUqDocs);
+        final List<TestCalcCheckListEntity> testCalcCheckListEntities = testCalcCheckListService.getAll();
+
+        return testCalcCheckListEntities != null &&  !testCalcCheckListEntities.isEmpty()
+                ? new ResponseEntity<>(testCalcCheckListEntities, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

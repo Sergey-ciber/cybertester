@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import greenCheckMark from '../../../../../assets/greenСheckMark.png'
 import redCheckMark from '../../../../../assets/redCheckMark.png'
 
-const Doc = (props) => {debugger
+const Doc = (props) => {
 
     let checkbox = () => {
         if (props.docEl.doCheck === 1) {

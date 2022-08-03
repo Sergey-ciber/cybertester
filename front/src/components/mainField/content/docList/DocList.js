@@ -8,11 +8,10 @@ import axios from "axios";
 const DocList = (props) => {
 
     useEffect(() => {
-        axios.get("http://localhost:8090/calc").then(response => {
-            props.setDocList(response.data)
-        })
+        props.getDocsThunkCreator()
     }, [])
     console.log("useEffect")
+
 
     return (
         <div className={style.docList}>
