@@ -54,12 +54,6 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
     }
 
     @Override
-    public void update(TestCalcCheckListEntity testCalcCheckListEntity, long id) {
-        testCalcCheckListEntity.setId(id);
-        testCalcCheckListRepository.save(testCalcCheckListEntity);
-    }
-
-    @Override
     public List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck) {
         return testCalcCheckListRepository.getAllByDoCheck(doCheck);
     }
@@ -77,10 +71,21 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
         return false;
     }
 
+//    @Override
+//    public List<TestCalcCheckListEntity> getAll() {
+//        return testCalcCheckListRepository.findAll();
+//    }
+
     @Override
-    public List<TestCalcCheckListEntity> getAll() {
-        return testCalcCheckListRepository.findAll();
+    public List<TestCalcCheckListEntity> findAllByOrderByIdAsc() {
+        return testCalcCheckListRepository.findAllByOrderByIdAsc();
     }
 
-
+    @Override
+    public void update(TestCalcCheckListEntity testCalcCheckListEntity, long id) {
+        if (testCalcCheckListRepository.existsById(id)) {
+            testCalcCheckListEntity.setId(id);
+            testCalcCheckListRepository.save(testCalcCheckListEntity);
+        }
+    }
 }

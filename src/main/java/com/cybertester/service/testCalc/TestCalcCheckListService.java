@@ -22,8 +22,6 @@ public interface TestCalcCheckListService {
 
     TestCalcCheckListEntity getFirstById(long id);
 
-    void update(TestCalcCheckListEntity testCalcCheckListEntity, long id);
-
     List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck);
 
     void deleteByRecordUqRegistr(long recordUqRegistr);
@@ -32,5 +30,11 @@ public interface TestCalcCheckListService {
     boolean delete(long id);
 
     //Получаем все документы из списка
-    public List<TestCalcCheckListEntity> getAll();
+//    List<TestCalcCheckListEntity> getAll();
+
+    List<TestCalcCheckListEntity> findAllByOrderByIdAsc();
+
+    void update(TestCalcCheckListEntity testCalcCheckListEntity, long id);
+
+
 }

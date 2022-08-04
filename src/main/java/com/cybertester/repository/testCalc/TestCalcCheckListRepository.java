@@ -2,12 +2,13 @@ package com.cybertester.repository.testCalc;
 
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface TestCalcCheckListRepository extends JpaRepository<TestCalcCheckListEntity, Long> {
+public interface TestCalcCheckListRepository extends PagingAndSortingRepository<TestCalcCheckListEntity, Long> {
 
     // Получаем список сущностей по RECORD_UQ
     List<TestCalcCheckListEntity> getAllByRecordUqRegistr(long recordUqRegistr);
@@ -20,5 +21,7 @@ public interface TestCalcCheckListRepository extends JpaRepository<TestCalcCheck
     List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck);
 
     TestCalcCheckListEntity getById(long id);
+
+    List<TestCalcCheckListEntity> findAllByOrderByIdAsc();
 
 }

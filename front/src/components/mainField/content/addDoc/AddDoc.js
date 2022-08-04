@@ -9,7 +9,7 @@ const AddDoc = (props) => {
     let addDocRef = React.createRef();
 
     let onAddDoc = () => {
-        props.addDocsToDocsList(124128774)
+        props.addDocsToDocsList(recordUqText)
         setRecordUqText("")
     }
 

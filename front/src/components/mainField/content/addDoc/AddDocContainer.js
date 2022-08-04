@@ -7,12 +7,6 @@ import {addDoc, addDocsToDocsList, updateRecordUqText} from "../../../../redax/c
 let mapStateToProps = (state) => {
     return {recordUqText: state.calcTestData.recordUqText}
 }
-// let mapDispatchToProps = (dispatch) => {
-//     return {
-//         onAddDoc: () => {dispatch(addDoc())},
-//         updateRecordUqText: (text) => {dispatch(updateRecordUqText(text))}
-//     }
-// }
 
 const AddDocContainer = connect(mapStateToProps, {addDocsToDocsList, updateRecordUqText}) (AddDoc)
 export default AddDocContainer;

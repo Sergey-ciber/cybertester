@@ -6,11 +6,24 @@ import redCheckMark from '../../../../../assets/redCheckMark.png'
 
 const Doc = (props) => {
 
+    let updateDoc = () => {
+        let newDoc = {
+            id: props.docEl.id,
+            guidInput: props.docEl.guidInput,
+            doCheck: (props.docEl.doCheck === 1) ? 0 :1,
+            recordUqRegistr: props.docEl.recordUqRegistr,
+            calcResult: props.docEl.calcResult,
+            message: props.docEl.message,
+            checkDate: props.docEl.checkDate
+        }
+        props.updateDoc(newDoc)
+    }
+
     let checkbox = () => {
         if (props.docEl.doCheck === 1) {
-           return <input type="checkbox" id="doCheck" name="doCheck" defaultChecked={"checked"}/>
+           return <input type="checkbox" id="doCheck" onChange={() => updateDoc()} name="doCheck" defaultChecked={"checked"}/>
         } else{
-            return <input type="checkbox" id="doCheck" name="doCheck" />
+            return <input type="checkbox" onChange={() => updateDoc()}  id="doCheck" name="doCheck" />
         }
     }
 

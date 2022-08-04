@@ -10,7 +10,6 @@ const DocList = (props) => {
     useEffect(() => {
         props.getDocsThunkCreator()
     }, [])
-    console.log("useEffect")
 
 
     return (
@@ -18,7 +17,7 @@ const DocList = (props) => {
             <DocHeader/>
             {
                 props.docList.map(docEl =>
-                    <Doc key={docEl.id} docEl={docEl}/>
+                    <Doc key={docEl.id} docEl={docEl} updateDoc={props.updateDoc}/>
                 )
             }
         </div>

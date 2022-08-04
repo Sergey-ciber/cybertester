@@ -4,7 +4,7 @@
     /*justify-items: center;*/
     margin: 1%;
     /*background-color: gold;*/
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 25% 25% 50%;
     color: white;
 }
 .testFieldHeader .navLink{
@@ -12,12 +12,21 @@
     border: gold solid 1px;
     justify-items: center;
     align-content: center;
+    margin-left: 5%;
+}
+.checkButton{
+    cursor: pointer;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    border: gold solid 1px;
+    margin-left: 10%;
+    color: gold;
 }
 
 .testFieldHeader a{
     color: gold;
     text-decoration: none;
-    font-size: 120%;
 }
 
 .testName{

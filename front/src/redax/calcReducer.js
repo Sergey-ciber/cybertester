@@ -79,4 +79,22 @@ export const addDocsToDocsList = (recordUqText) => {
     }
 }
 
+export const updateDoc = (doc) => {
+
+    return (dispatch) => {
+        axios.post(`http://localhost:8090/calc/update/${doc.id}`, doc).then(response => {
+            dispatch(setDocList(response.data))
+        })
+    }
+}
+
+export const checkCalculation = () => {
+
+    return (dispatch) => {
+        axios.get("http://localhost:8090/calc/checkDocs").then(response => {
+            dispatch(setDocList(response.data))
+        })
+    }
+}
+
 export default calcReducer;
