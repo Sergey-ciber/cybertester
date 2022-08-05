@@ -1,6 +1,7 @@
 package com.cybertester.repository.testCalc;
 
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,12 @@ public interface TestCalcCheckListRepository extends PagingAndSortingRepository<
     TestCalcCheckListEntity getById(long id);
 
     List<TestCalcCheckListEntity> findAllByOrderByIdAsc();
+
+    List<TestCalcCheckListEntity> findAll(Sort sort);
+
+
+//    List<TestCalcCheckListEntity> findAllByCalcResultBefore();
+//
+//    List<TestCalcCheckListEntity> findAllByCalcResultAfter();
 
 }

@@ -4,4 +4,13 @@
     justify-items: center;
     margin: 3%;
     font-size: small;
+    height: 5%;
+}
+
+.docHeader h4{
+    cursor: pointer;
+}
+
+.docHeader h4:hover{
+    font-size: 110%;
 }

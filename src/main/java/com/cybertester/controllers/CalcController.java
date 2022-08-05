@@ -1,5 +1,6 @@
 package com.cybertester.controllers;
 
+import com.cybertester.components.CalcAPIResponse;
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import com.cybertester.service.testCalc.TestCalcCheckListService;
 import com.cybertester.utils.CalcUtility;
@@ -22,50 +23,64 @@ public class CalcController {
         this.testCalcCheckListService = testCalcCheckListService;
     }
 
-    // Получаем весь список документов
+    // Получаем все документы без сортировки
     @GetMapping
-    public ResponseEntity<List<TestCalcCheckListEntity>> getDocList() {
-        final List<TestCalcCheckListEntity> testCalcCheckListEntities = testCalcCheckListService.findAllByOrderByIdAsc();
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> getAllDocs() {
 
-        return testCalcCheckListEntities != null && !testCalcCheckListEntities.isEmpty()
-                ? new ResponseEntity<>(testCalcCheckListEntities, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
+
+        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
     }
+
+//     Получаем отсортированный список документов
+    @GetMapping("/sort")
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> getDocListWithSort(@RequestParam("field") String field,
+                                                                             @RequestParam("sort") String sort) {
+
+        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllWithSort(field, sort);
+
+        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+    }
+
 
     // Проверяем результаты расчетов
     @GetMapping("/checkDocs")
-    public ResponseEntity<List<TestCalcCheckListEntity>> checkDocs() {
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> checkDocs() {
 
         calcUtility.goCalcCheckList();
-        final List<TestCalcCheckListEntity> testCalcCheckListEntities = testCalcCheckListService.findAllByOrderByIdAsc();
+        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
 
-        return testCalcCheckListEntities != null && !testCalcCheckListEntities.isEmpty()
-                ? new ResponseEntity<>(testCalcCheckListEntities, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
     }
 
     // Добавляем документы в список
     @GetMapping("/addDocs")
-    public ResponseEntity<List<TestCalcCheckListEntity>> addDoc(@RequestParam("recordUqDocs") String recordUqDocs) {
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> addDoc(@RequestParam("recordUqDocs") String recordUqDocs) {
         calcUtility.addListRecordUqStringToCalcCheckList(recordUqDocs);
-        final List<TestCalcCheckListEntity> testCalcCheckListEntities = testCalcCheckListService.findAllByOrderByIdAsc();
+        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
 
-        return testCalcCheckListEntities != null && !testCalcCheckListEntities.isEmpty()
-                ? new ResponseEntity<>(testCalcCheckListEntities, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
     }
 
 
     // Обновляем документ
     @PostMapping(value = "/update/{id}")
-    public ResponseEntity<List<TestCalcCheckListEntity>> update(@PathVariable(name = "id") long id,
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> update(@PathVariable(name = "id") long id,
                                                                 @RequestBody TestCalcCheckListEntity testCalcCheckListEntity) {
         testCalcCheckListService.update(testCalcCheckListEntity, id);
 
-        final List<TestCalcCheckListEntity> testCalcCheckListEntities = testCalcCheckListService.findAllByOrderByIdAsc();
+        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
 
-        return testCalcCheckListEntities != null && !testCalcCheckListEntities.isEmpty()
-                ? new ResponseEntity<>(testCalcCheckListEntities, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
     }
 }

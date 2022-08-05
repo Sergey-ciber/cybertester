@@ -1,6 +1,7 @@
 package com.cybertester.service.testCalc;
 
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -30,7 +31,10 @@ public interface TestCalcCheckListService {
     boolean delete(long id);
 
     //Получаем все документы из списка
-//    List<TestCalcCheckListEntity> getAll();
+    List<TestCalcCheckListEntity> getAll();
+
+    // Получаем отсортированный список документов
+    List<TestCalcCheckListEntity> findAllWithSort(String field, String sort);
 
     List<TestCalcCheckListEntity> findAllByOrderByIdAsc();
 

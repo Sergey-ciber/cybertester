@@ -9,7 +9,7 @@ const TestFieldHeader = (props) => {
 
     return(
         <div className={style.testFieldHeader}>
-            <NavLink to={"/test/calc/addDoc"} className={style.navLink}>
+            <NavLink to={"/test/calc/addDoc"} className={style.addDocNavLink}>
                 <div>Добавить документ в чек лист</div>
             </NavLink>
             <div className={style.checkButton} onClick={() => {props.checkCalculation()}}>Проверить расчет</div>

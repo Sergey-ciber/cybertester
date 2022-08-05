@@ -3,6 +3,7 @@ package com.cybertester.service.testCalc;
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import com.cybertester.repository.testCalc.TestCalcCheckListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,10 +72,19 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
         return false;
     }
 
-//    @Override
-//    public List<TestCalcCheckListEntity> getAll() {
-//        return testCalcCheckListRepository.findAll();
-//    }
+    @Override
+    public List<TestCalcCheckListEntity> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<TestCalcCheckListEntity> findAllWithSort(String field, String sort) {
+        System.out.println(sort);
+        return sort.equals("asc") ?
+                testCalcCheckListRepository.findAll(Sort.by(Sort.Direction.ASC, field))
+                : testCalcCheckListRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+    }
+
 
     @Override
     public List<TestCalcCheckListEntity> findAllByOrderByIdAsc() {

@@ -7,12 +7,16 @@
     grid-template-columns: 25% 25% 50%;
     color: white;
 }
-.testFieldHeader .navLink{
+.testFieldHeader .addDocNavLink{
     display: grid;
     border: gold solid 1px;
     justify-items: center;
     align-content: center;
     margin-left: 5%;
+}
+
+.testFieldHeader .addDocNavLink:hover{
+    font-size: 110%;
 }
 .checkButton{
     cursor: pointer;
@@ -22,6 +26,9 @@
     border: gold solid 1px;
     margin-left: 10%;
     color: gold;
+}
+.checkButton:hover{
+    font-size: 110%;
 }
 
 .testFieldHeader a{
