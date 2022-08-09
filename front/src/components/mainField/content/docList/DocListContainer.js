@@ -1,12 +1,21 @@
 import React from "react";
 import {connect} from "react-redux";
 import DocList from "./DocList";
-import {getDocsThunkCreator, setDocList, updateDoc} from "../../../../redax/calcReducer";
+import {
+    deleteDoc,
+    getDocsThunkCreator,
+    getDocsWithPaginationAndSort,
+    setDocList,
+    updateDoc
+} from "../../../../redax/calcReducer";
 
 let mapStateToProps = (state) => {
-    return {docList: state.calcTestData.docList, docsCount: state.calcTestData.docsCount}
+    return {docList: state.calcTestData.docList, totalDocsCount: state.calcTestData.totalDocsCount,
+    pageSize: state.calcTestData.pageSize, currentPage: state.calcTestData.currentPage}
 }
 
-const DocListContainer = connect(mapStateToProps, {setDocList, getDocsThunkCreator, updateDoc})(DocList)
+const DocListContainer = connect(mapStateToProps, {setDocList, getDocsThunkCreator,
+    updateDoc, deleteDoc, getDocsWithPaginationAndSort
+})(DocList)
 
 export default DocListContainer;

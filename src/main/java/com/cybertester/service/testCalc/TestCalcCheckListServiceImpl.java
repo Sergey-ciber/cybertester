@@ -3,6 +3,8 @@ package com.cybertester.service.testCalc;
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import com.cybertester.repository.testCalc.TestCalcCheckListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -74,12 +76,12 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
 
     @Override
     public List<TestCalcCheckListEntity> getAll() {
-        return null;
+
+        return testCalcCheckListRepository.findAll();
     }
 
     @Override
     public List<TestCalcCheckListEntity> findAllWithSort(String field, String sort) {
-        System.out.println(sort);
         return sort.equals("asc") ?
                 testCalcCheckListRepository.findAll(Sort.by(Sort.Direction.ASC, field))
                 : testCalcCheckListRepository.findAll(Sort.by(Sort.Direction.DESC, field));
@@ -97,5 +99,19 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
             testCalcCheckListEntity.setId(id);
             testCalcCheckListRepository.save(testCalcCheckListEntity);
         }
+    }
+
+    //Получаем постранично список документов
+    public Page<TestCalcCheckListEntity> findDocsWithPagination(int pageSize, int offset) {
+        Page<TestCalcCheckListEntity> docsPage = testCalcCheckListRepository.findAll(PageRequest.of(offset, pageSize));
+        return docsPage;
+    }
+
+    //Получаем постранично список документов с сортировкой
+    public Page<TestCalcCheckListEntity> findDocsWithPaginationAndSort(int pageSize, int offset, String field, String sort) {
+
+        return sort.equals("asc") ?
+                testCalcCheckListRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.ASC, field)))
+                : testCalcCheckListRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.DESC, field)));
     }
 }

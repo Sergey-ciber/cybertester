@@ -27,6 +27,8 @@ public interface TestCalcCheckListRepository extends PagingAndSortingRepository<
 
     List<TestCalcCheckListEntity> findAll(Sort sort);
 
+    List<TestCalcCheckListEntity> findAll();
+
 
 //    List<TestCalcCheckListEntity> findAllByCalcResultBefore();
 //

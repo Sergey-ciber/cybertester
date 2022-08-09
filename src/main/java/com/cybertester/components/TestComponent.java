@@ -47,6 +47,8 @@ public class TestComponent {
 
 //        testCalcCheckListService.update(testCalcCheckListEntity, 24);
 
+//        System.out.println(testCalcCheckListService.findDocsWithPaginationAndSort(2, 1, "id", "asc").getContent());
+
 //        calcUtility.addListRecordUqStringToCalcCheckList("124107991,124107990");
 
 //        calcUtility.goCalcCheckList();

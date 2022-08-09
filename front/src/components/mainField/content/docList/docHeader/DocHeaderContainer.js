@@ -6,7 +6,8 @@ import {getDocsWithSort, setFieldName, setSort} from "../../../../../redax/calcR
 let mapStateToProps = (state) => {
     return {
         sort: state.calcTestData.sort,
-        fieldName: state.calcTestData.fieldName
+        fieldName: state.calcTestData.fieldName,
+        currentPage: state.calcTestData.currentPage
     }
 }
 

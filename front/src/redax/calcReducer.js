@@ -5,10 +5,14 @@ const ADD_DOC = 'ADD-DOC'
 const SET_DOC_LIST = 'SET-DOC-LIST'
 const SET_SORT = 'SET-SORT'
 const SET_FIELD_NAME = 'SET-FIELD-NAME'
+const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 
 let initialState = {
     recordUqText: "",
     fieldName: null,
+    totalDocsCount: 8,
+    pageSize: 2,
+    currentPage: 1,
     docList: [
         // {
         //     id: 0,
@@ -24,7 +28,12 @@ let initialState = {
 const calcReducer = (state = initialState, action) => {
 
     switch (action.type) {
-
+        case SET_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
         case SET_FIELD_NAME: {
             return {
                 ...state,
@@ -87,6 +96,10 @@ export const setDocList = (docList, docsCount) => {
     return {type: SET_DOC_LIST, docList, docsCount}
 }
 
+export const setCurrentPage = (currentPage) => {
+    return {type: SET_CURRENT_PAGE, currentPage}
+}
+
 export const getDocsWithSort = (field, sort) => {
     return (dispatch) => {
         axios.get(`http://localhost:8090/calc/sort?field=${field}&sort=${sort}`).then(response => {
@@ -127,6 +140,25 @@ export const checkCalculation = () => {
 
     return (dispatch) => {
         axios.get("http://localhost:8090/calc/checkDocs").then(response => {
+            dispatch(setDocList(response.data.docList, response.data.docsCount))
+        })
+    }
+}
+
+export const deleteDoc = (docId) => {
+
+    return (dispatch) => {
+        axios.delete(`http://localhost:8090/calc/delete/${docId}`).then(response => {
+            dispatch(setDocList(response.data.docList, response.data.docsCount))
+        })
+    }
+}
+
+export const getDocsWithPaginationAndSort = (field, sort, offset, pageSize) => {
+
+    return (dispatch) => {
+        axios.get(`http://localhost:8090/calc/pagination/sort?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`).then(response => {
+            dispatch(setCurrentPage(offset))
             dispatch(setDocList(response.data.docList, response.data.docsCount))
         })
     }

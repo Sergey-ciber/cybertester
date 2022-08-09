@@ -5,13 +5,15 @@ const DocHeader = (props) => {
 
     let sortBy = (field) => {
 
+        //sort - больше / меньше
+        // fieldName - название столбца id
+
         // Сортировка документов
         if (props.fieldName === null) {
             props.setFieldName(field)
             props.getDocsWithSort(field, "asc")
             props.setSort(false)
         } else if (props.fieldName === field) {
-            debugger
             if (props.sort === false) {
                 props.getDocsWithSort(field, "desc")
                 props.setSort(true)
@@ -20,7 +22,6 @@ const DocHeader = (props) => {
                 props.setSort(false)
             }
         } else if (props.fieldName !== field) {
-            debugger
             props.getDocsWithSort(field, "asc")
             props.setSort(false)
             props.setFieldName(field)

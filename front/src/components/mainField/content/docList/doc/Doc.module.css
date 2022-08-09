@@ -1,17 +1,19 @@
 .doc{
     display: grid;
-    grid-template-columns: 90% 10%;
+    grid-template-columns: 88% 6% 6%;
     margin: 1%;
     font-size: small;
     border-bottom: gold solid 1px;
     height: 2%;
 }
 .docLink{
+    display: grid;
+    justify-items: center;
     margin-left: 3%;
     display: grid;
     text-decoration: none;
     color: black;
-    grid-template-columns: 10% 20% 40% 20% 5% 5%;
+    grid-template-columns: 2% 20% 40% 25% 10%;
 }
 .docLink:hover{
     font-size: 110%;
@@ -23,4 +25,9 @@ nav.active{
 .checkBox{
     display: grid;
     justify-items: center;
+}
+.trash{
+    display: grid;
+    justify-items: center;
+    cursor: pointer;
 }

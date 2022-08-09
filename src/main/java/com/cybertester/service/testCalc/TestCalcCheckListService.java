@@ -1,6 +1,7 @@
 package com.cybertester.service.testCalc;
 
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -40,5 +41,10 @@ public interface TestCalcCheckListService {
 
     void update(TestCalcCheckListEntity testCalcCheckListEntity, long id);
 
+    //Получаем постранично список документов
+    Page<TestCalcCheckListEntity> findDocsWithPagination(int pageSize, int offset);
+
+    //Получаем постранично список документов с сортировкой
+    Page<TestCalcCheckListEntity> findDocsWithPaginationAndSort(int pageSize, int offset, String field, String sort);
 
 }

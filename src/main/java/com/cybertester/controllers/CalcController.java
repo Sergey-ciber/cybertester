@@ -4,6 +4,7 @@ import com.cybertester.components.CalcAPIResponse;
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
 import com.cybertester.service.testCalc.TestCalcCheckListService;
 import com.cybertester.utils.CalcUtility;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class CalcController {
                 : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
     }
 
-//     Получаем отсортированный список документов
+    //     Получаем отсортированный список документов
     @GetMapping("/sort")
     public CalcAPIResponse<List<TestCalcCheckListEntity>> getDocListWithSort(@RequestParam("field") String field,
                                                                              @RequestParam("sort") String sort) {
@@ -74,13 +75,50 @@ public class CalcController {
     // Обновляем документ
     @PostMapping(value = "/update/{id}")
     public CalcAPIResponse<List<TestCalcCheckListEntity>> update(@PathVariable(name = "id") long id,
-                                                                @RequestBody TestCalcCheckListEntity testCalcCheckListEntity) {
+                                                                 @RequestBody TestCalcCheckListEntity testCalcCheckListEntity) {
         testCalcCheckListService.update(testCalcCheckListEntity, id);
 
         final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
 
         return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
                 ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+    }
+
+    // Удаляем документ
+    @DeleteMapping("/delete/{id}")
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> delete(@PathVariable(name = "id") long id) {
+        testCalcCheckListService.delete(id);
+
+        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
+
+        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/pagination/{pageSize}/{offset}")
+    public Page<TestCalcCheckListEntity> getDocsWithPagination(@PathVariable(name = "offset") int offset,
+                                                               @PathVariable(name = "pageSize") int pageSize) {
+
+        Page<TestCalcCheckListEntity> docPage = testCalcCheckListService.findDocsWithPagination(pageSize, offset);
+
+        return docPage;
+    }
+
+    // Получаем отсортированный список документов постранично
+    @GetMapping("pagination/sort")
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> findDocsWithPaginationAndSort(@RequestParam("field") String field,
+                                                                                        @RequestParam("sort") String sort,
+                                                                                        @RequestParam("pageSize") int pageSize,
+                                                                                        @RequestParam("offset") int offset
+    ) {
+        List<TestCalcCheckListEntity> docList = testCalcCheckListService.findDocsWithPaginationAndSort(
+                pageSize, offset, field, sort).getContent();
+
+
+        return docList != null && !docList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListService.getAll().size(), docList, HttpStatus.OK)
                 : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
     }
 }

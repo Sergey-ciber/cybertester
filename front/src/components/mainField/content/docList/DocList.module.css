@@ -8,3 +8,13 @@
 .docsCount{
     margin: 3%;
 }
+.currentPage{
+    font-size: 110%;
+    color: gold;
+    margin-left: 1%;
+    font-weight: bold;
+}
+
+.page{
+    margin-left: 1%;
+}
