@@ -5,8 +5,14 @@ import {addDoc, addDocsToDocsList, updateRecordUqText} from "../../../../redax/c
 
 
 let mapStateToProps = (state) => {
-    return {recordUqText: state.calcTestData.recordUqText}
+    return {
+        recordUqText: state.calcTestData.recordUqText,
+        field: state.calcTestData.fieldName,
+        sort: state.calcTestData.sort,
+        pageSize: state.calcTestData.pageSize,
+        currentPage: state.calcTestData.currentPage,
+    }
 }
 
-const AddDocContainer = connect(mapStateToProps, {addDocsToDocsList, updateRecordUqText}) (AddDoc)
+const AddDocContainer = connect(mapStateToProps, {addDocsToDocsList, updateRecordUqText})(AddDoc)
 export default AddDocContainer;

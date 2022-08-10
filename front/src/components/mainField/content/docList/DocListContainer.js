@@ -11,7 +11,8 @@ import {
 
 let mapStateToProps = (state) => {
     return {docList: state.calcTestData.docList, totalDocsCount: state.calcTestData.totalDocsCount,
-    pageSize: state.calcTestData.pageSize, currentPage: state.calcTestData.currentPage}
+    pageSize: state.calcTestData.pageSize, currentPage: state.calcTestData.currentPage, field: state.calcTestData.fieldName,
+    sort: state.calcTestData.sort}
 }
 
 const DocListContainer = connect(mapStateToProps, {setDocList, getDocsThunkCreator,

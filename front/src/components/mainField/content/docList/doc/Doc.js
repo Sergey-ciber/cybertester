@@ -3,9 +3,7 @@ import style from './Doc.module.css'
 import {NavLink} from "react-router-dom";
 import greenCheckMark from '../../../../../assets/greenСheckMark.png'
 import redCheckMark from '../../../../../assets/redCheckMark.png'
-import IconButton from "@mui/material/IconButton";
 import trash from '../../../../../assets/trash.png'
-import Button from "@mui/material/Button";
 
 const Doc = (props) => {
 
@@ -19,11 +17,11 @@ const Doc = (props) => {
             message: props.docEl.message,
             checkDate: props.docEl.checkDate
         }
-        props.updateDoc(newDoc)
+        props.updateDoc(newDoc, props.field, props.sort, props.pageSize, props.currentPage)
     }
 
     let deleteDoc = (id) => {
-        props.deleteDoc(id)
+        props.deleteDoc(id, props.field, props.sort, props.pageSize, props.currentPage)
     }
 
     let checkbox = () => {

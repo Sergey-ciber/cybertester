@@ -76,18 +76,29 @@ public class CalcUtility {
             return false;
         }
 
-        return Double.compare(calcT.getPrice(), calcS.getPrice()) == 0 &&
-                calcT.getRecordUqRegistr() == calcS.getRecordUqRegistr() &&
-                calcT.getPeriodPercent() == calcS.getPeriodPercent() &&
-                Double.compare(calcT.getPricesPercent(), calcS.getPricesPercent()) == 0 &&
-                Double.compare(calcT.getCountDays(), calcS.getCountDays()) == 0 &&
-                Double.compare(calcT.getSumma(), calcS.getSumma()) == 0 &&
-                calcT.getRecordUqAlceType() == calcS.getRecordUqAlceType() &&
-                calcT.getRecordUqBCC() == calcS.getRecordUqBCC() &&
-                calcT.getYearCalc() == calcS.getYearCalc() &&
-                calcT.getPeriodBegDay().equals(calcS.getPeriodBegDay()) &&
-                calcT.getPeriodEndDay().equals(calcS.getPeriodEndDay());
-
+        if (calcT.getPeriodBegDay() != null && calcT.getPeriodEndDay() != null) {
+            return Double.compare(calcT.getPrice(), calcS.getPrice()) == 0 &&
+                    calcT.getRecordUqRegistr() == calcS.getRecordUqRegistr() &&
+                    calcT.getPeriodPercent() == calcS.getPeriodPercent() &&
+                    Double.compare(calcT.getPricesPercent(), calcS.getPricesPercent()) == 0 &&
+                    Double.compare(calcT.getCountDays(), calcS.getCountDays()) == 0 &&
+                    Double.compare(calcT.getSumma(), calcS.getSumma()) == 0 &&
+                    calcT.getRecordUqAlceType() == calcS.getRecordUqAlceType() &&
+                    calcT.getRecordUqBCC() == calcS.getRecordUqBCC() &&
+                    calcT.getYearCalc() == calcS.getYearCalc() &&
+                    calcT.getPeriodBegDay().equals(calcS.getPeriodBegDay()) &&
+                    calcT.getPeriodEndDay().equals(calcS.getPeriodEndDay());
+        } else {
+            return Double.compare(calcT.getPrice(), calcS.getPrice()) == 0 &&
+                    calcT.getRecordUqRegistr() == calcS.getRecordUqRegistr() &&
+                    calcT.getPeriodPercent() == calcS.getPeriodPercent() &&
+                    Double.compare(calcT.getPricesPercent(), calcS.getPricesPercent()) == 0 &&
+                    Double.compare(calcT.getCountDays(), calcS.getCountDays()) == 0 &&
+                    Double.compare(calcT.getSumma(), calcS.getSumma()) == 0 &&
+                    calcT.getRecordUqAlceType() == calcS.getRecordUqAlceType() &&
+                    calcT.getRecordUqBCC() == calcS.getRecordUqBCC() &&
+                    calcT.getYearCalc() == calcS.getYearCalc();
+        }
     }
 
     public void comparisonCalcResultByCheckListElement(TestCalcCheckListEntity checkListElement) {
@@ -196,22 +207,22 @@ public class CalcUtility {
     }
 
     // Получаем список документов из DX_REGISTR, преобразуем строку String в массив long
-    public long[] convertStringRecordUqRegistrToArr(String recordUqRegistr){
+    public long[] convertStringRecordUqRegistrToArr(String recordUqRegistr) {
 
         String[] StringRecordUqRegistrArr = recordUqRegistr.split(",");
         long[] longStringRecordUqRegistrArr = new long[StringRecordUqRegistrArr.length];
-        for (int i = 0; i <StringRecordUqRegistrArr.length; i++){
+        for (int i = 0; i < StringRecordUqRegistrArr.length; i++) {
             longStringRecordUqRegistrArr[i] = Long.parseLong(StringRecordUqRegistrArr[i]);
         }
         return longStringRecordUqRegistrArr;
     }
 
     // Добавляем доки в чек лист из списка по RECORD_UQ_REGISTR
-    public void addListRecordUqStringToCalcCheckList(String listRecordUq){
+    public void addListRecordUqStringToCalcCheckList(String listRecordUq) {
 
         long[] recordUqArr = convertStringRecordUqRegistrToArr(listRecordUq);
 
-        for (long recordUq : recordUqArr){
+        for (long recordUq : recordUqArr) {
             addDocToCalcCheckList(recordUq);
         }
     }

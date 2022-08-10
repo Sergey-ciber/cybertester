@@ -13,8 +13,10 @@
     color: gold;
     margin-left: 1%;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .page{
     margin-left: 1%;
+    cursor: pointer;
 }

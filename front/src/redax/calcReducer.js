@@ -9,25 +9,18 @@ const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 
 let initialState = {
     recordUqText: "",
-    fieldName: null,
-    totalDocsCount: 8,
-    pageSize: 2,
+    fieldName: "id",
+    totalDocsCount: 20,
+    pageSize: 30,
     currentPage: 1,
-    docList: [
-        // {
-        //     id: 0,
-        //     recordUq: 0,
-        //     guidInput: "",
-        //     doCheck: true,
-        //     date: "",
-        //     verified: true
-        // }
-    ]
+    sort: "asc",
+    docList: []
 }
 
 const calcReducer = (state = initialState, action) => {
 
     switch (action.type) {
+
         case SET_CURRENT_PAGE: {
             return {
                 ...state,
@@ -37,20 +30,20 @@ const calcReducer = (state = initialState, action) => {
         case SET_FIELD_NAME: {
             return {
                 ...state,
-                fieldName:action.fieldName
+                fieldName: action.fieldName
             }
         }
         case SET_SORT: {
             return {
                 ...state,
-               sort:action.sort
+                sort: action.sort
             }
         }
         case SET_DOC_LIST: {
             return {
                 ...state,
                 docList: action.docList,
-                docsCount: action.docsCount
+                totalDocsCount: action.docsCount
             }
         }
         case UPDATE_RECORD_UQ_TEXT: {
@@ -108,8 +101,6 @@ export const getDocsWithSort = (field, sort) => {
     }
 }
 
-
-
 export const getDocsThunkCreator = () => {
     return (dispatch) => {
         axios.get("http://localhost:8090/calc").then(response => {
@@ -118,49 +109,59 @@ export const getDocsThunkCreator = () => {
     }
 }
 
-export const addDocsToDocsList = (recordUqText) => {
+export const addDocsToDocsList = (recordUqText, field, sort, pageSize, offset) => {
+
 
     return (dispatch) => {
-        axios.get(`http://localhost:8090/calc/addDocs?recordUqDocs=${recordUqText}`).then(response => {
+        axios.get(`http://localhost:8090/calc/addDocs?recordUqDocs=${recordUqText}&field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
+            .then(response => {
             dispatch(setDocList(response.data.docList, response.data.docsCount))
         })
     }
 }
 
-export const updateDoc = (doc) => {
+export const updateDoc = (doc, field, sort, pageSize, offset) => {
 
     return (dispatch) => {
-        axios.post(`http://localhost:8090/calc/update/${doc.id}`, doc).then(response => {
+        axios.post(`http://localhost:8090/calc/update/${doc.id}?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`, doc)
+            .then(response => {
             dispatch(setDocList(response.data.docList, response.data.docsCount))
         })
     }
 }
 
-export const checkCalculation = () => {
+export const checkCalculation = (field, sort, pageSize, offset) => {
 
     return (dispatch) => {
-        axios.get("http://localhost:8090/calc/checkDocs").then(response => {
+        axios.get(`http://localhost:8090/calc/checkDocs?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
+            .then(response => {
             dispatch(setDocList(response.data.docList, response.data.docsCount))
         })
     }
 }
 
-export const deleteDoc = (docId) => {
-
+export const deleteDoc = (docId, field, sort, pageSize, offset) => {
     return (dispatch) => {
-        axios.delete(`http://localhost:8090/calc/delete/${docId}`).then(response => {
-            dispatch(setDocList(response.data.docList, response.data.docsCount))
-        })
+        axios.delete(`http://localhost:8090/calc/delete/${docId}?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
+            .then(response => {
+                if(response.data.h === "OK") {dispatch(setDocList(response.data.docList, response.data.docsCount))}
+                    else{dispatch(setCurrentPage(offset -1))
+                    axios.get(`http://localhost:8090/calc/pagination/sort?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 2}`)
+                        .then(response => {
+                            dispatch(setDocList(response.data.docList, response.data.docsCount))
+                        })}
+            })
     }
 }
 
 export const getDocsWithPaginationAndSort = (field, sort, offset, pageSize) => {
 
     return (dispatch) => {
-        axios.get(`http://localhost:8090/calc/pagination/sort?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`).then(response => {
-            dispatch(setCurrentPage(offset))
-            dispatch(setDocList(response.data.docList, response.data.docsCount))
-        })
+        axios.get(`http://localhost:8090/calc/pagination/sort?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
+            .then(response => {
+                dispatch(setCurrentPage(offset))
+                dispatch(setDocList(response.data.docList, response.data.docsCount))
+            })
     }
 }
 

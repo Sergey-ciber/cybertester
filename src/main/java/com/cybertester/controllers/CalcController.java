@@ -24,6 +24,17 @@ public class CalcController {
         this.testCalcCheckListService = testCalcCheckListService;
     }
 
+    private CalcAPIResponse<List<TestCalcCheckListEntity>> getDocsWithPaginationAndSortNew(
+            String field, String sort, int pageSize, int offset) {
+
+        List<TestCalcCheckListEntity> docList = testCalcCheckListService.findDocsWithPaginationAndSort(
+                pageSize, offset, field, sort).getContent();
+
+        return docList != null && !docList.isEmpty()
+                ? new CalcAPIResponse<>(testCalcCheckListService.getAll().size(), docList, HttpStatus.OK)
+                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+    }
+
     // Получаем все документы без сортировки
     @GetMapping
     public CalcAPIResponse<List<TestCalcCheckListEntity>> getAllDocs() {
@@ -50,51 +61,53 @@ public class CalcController {
 
     // Проверяем результаты расчетов
     @GetMapping("/checkDocs")
-    public CalcAPIResponse<List<TestCalcCheckListEntity>> checkDocs() {
-
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> checkDocs(@RequestParam("field") String field,
+                                                                    @RequestParam("sort") String sort,
+                                                                    @RequestParam("pageSize") int pageSize,
+                                                                    @RequestParam("offset") int offset
+    ) {
         calcUtility.goCalcCheckList();
-        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
 
-        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
-                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
-                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+        return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 
     // Добавляем документы в список
     @GetMapping("/addDocs")
-    public CalcAPIResponse<List<TestCalcCheckListEntity>> addDoc(@RequestParam("recordUqDocs") String recordUqDocs) {
-        calcUtility.addListRecordUqStringToCalcCheckList(recordUqDocs);
-        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> addDoc(@RequestParam("recordUqDocs") String recordUqDocs,
+                                                                 @RequestParam("field") String field,
+                                                                 @RequestParam("sort") String sort,
+                                                                 @RequestParam("pageSize") int pageSize,
+                                                                 @RequestParam("offset") int offset) {
 
-        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
-                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
-                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+        calcUtility.addListRecordUqStringToCalcCheckList(recordUqDocs);
+        return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 
 
     // Обновляем документ
     @PostMapping(value = "/update/{id}")
     public CalcAPIResponse<List<TestCalcCheckListEntity>> update(@PathVariable(name = "id") long id,
-                                                                 @RequestBody TestCalcCheckListEntity testCalcCheckListEntity) {
+                                                                 @RequestBody TestCalcCheckListEntity testCalcCheckListEntity,
+                                                                 @RequestParam("field") String field,
+                                                                 @RequestParam("sort") String sort,
+                                                                 @RequestParam("pageSize") int pageSize,
+                                                                 @RequestParam("offset") int offset) {
+
         testCalcCheckListService.update(testCalcCheckListEntity, id);
 
-        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
-
-        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
-                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
-                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+        return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 
     // Удаляем документ
     @DeleteMapping("/delete/{id}")
-    public CalcAPIResponse<List<TestCalcCheckListEntity>> delete(@PathVariable(name = "id") long id) {
+    public CalcAPIResponse<List<TestCalcCheckListEntity>> delete(@PathVariable(name = "id") long id,
+                                                                 @RequestParam("field") String field,
+                                                                 @RequestParam("sort") String sort,
+                                                                 @RequestParam("pageSize") int pageSize,
+                                                                 @RequestParam("offset") int offset) {
+
         testCalcCheckListService.delete(id);
-
-        final List<TestCalcCheckListEntity> testCalcCheckListEntitiesList = testCalcCheckListService.findAllByOrderByIdAsc();
-
-        return testCalcCheckListEntitiesList != null && !testCalcCheckListEntitiesList.isEmpty()
-                ? new CalcAPIResponse<>(testCalcCheckListEntitiesList.size(), testCalcCheckListEntitiesList, HttpStatus.OK)
-                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+        return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 
     @GetMapping("/pagination/{pageSize}/{offset}")
@@ -113,12 +126,6 @@ public class CalcController {
                                                                                         @RequestParam("pageSize") int pageSize,
                                                                                         @RequestParam("offset") int offset
     ) {
-        List<TestCalcCheckListEntity> docList = testCalcCheckListService.findDocsWithPaginationAndSort(
-                pageSize, offset, field, sort).getContent();
-
-
-        return docList != null && !docList.isEmpty()
-                ? new CalcAPIResponse<>(testCalcCheckListService.getAll().size(), docList, HttpStatus.OK)
-                : new CalcAPIResponse<>(0, null, HttpStatus.NOT_FOUND);
+        return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 }

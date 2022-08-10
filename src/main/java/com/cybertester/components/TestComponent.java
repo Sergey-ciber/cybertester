@@ -45,7 +45,7 @@ public class TestComponent {
         testCalcCheckListEntity.setMessage("Hello");
         testCalcCheckListEntity.setRecordUqRegistr(121212);
 
-//        testCalcCheckListService.update(testCalcCheckListEntity, 24);
+calcUtility.goCalcCheckList();
 
 //        System.out.println(testCalcCheckListService.findDocsWithPaginationAndSort(2, 1, "id", "asc").getContent());
 

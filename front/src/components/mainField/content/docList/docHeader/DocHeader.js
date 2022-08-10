@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import style from './DocHeader.module.css'
+import {getDocsWithPaginationAndSort} from "../../../../../redax/calcReducer";
 
 const DocHeader = (props) => {
 
@@ -9,20 +10,20 @@ const DocHeader = (props) => {
         // fieldName - название столбца id
 
         // Сортировка документов
-        if (props.fieldName === null) {
+        if (props.field === null) {
             props.setFieldName(field)
-            props.getDocsWithSort(field, "asc")
+            props.getDocsWithPaginationAndSort(field, "asc", props.currentPage, props.pageSize)
             props.setSort(false)
-        } else if (props.fieldName === field) {
+        } else if (props.field === field) {
             if (props.sort === false) {
-                props.getDocsWithSort(field, "desc")
+                props.getDocsWithPaginationAndSort(field, "desc", props.currentPage, props.pageSize)
                 props.setSort(true)
             } else {
-                props.getDocsWithSort(field, "asc")
+                props.getDocsWithPaginationAndSort(field, "asc", props.currentPage, props.pageSize)
                 props.setSort(false)
             }
-        } else if (props.fieldName !== field) {
-            props.getDocsWithSort(field, "asc")
+        } else if (props.field !== field) {
+            props.getDocsWithPaginationAndSort(field, "asc", props.currentPage, props.pageSize)
             props.setSort(false)
             props.setFieldName(field)
         }

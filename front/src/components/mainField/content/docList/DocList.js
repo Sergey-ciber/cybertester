@@ -9,14 +9,14 @@ import DocHeaderContainer from "./docHeader/DocHeaderContainer";
 const DocList = (props) => {
 
     useEffect(() => {
-        getDocsWithPaginationAndSort("id", "asc" , 1, 2)
-        }, [])
+        getDocsWithPaginationAndSort("id", "asc", 1, props.pageSize)
+    }, [])
 
-    let pagesCount = props.totalDocsCount / props.pageSize
+    let pagesCount = Math.ceil(props.totalDocsCount / props.pageSize)
 
     let pages = []
 
-    for(let i = 1; i <= pagesCount; i++){
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
 
@@ -24,8 +24,11 @@ const DocList = (props) => {
         props.getDocsWithPaginationAndSort(field, sort, currentPage, pageSize)
     }
 
-    let pagination = pages.map(el => {debugger
-        return <span onClick={() => {getDocsWithPaginationAndSort("id", "asc", el , 2)}} className={props.currentPage === el ? style.currentPage : style.page}>{el}</span>
+    let pagination = pages.map(el => {
+        return <span onClick={() => {
+            getDocsWithPaginationAndSort(props.field, props.sort, el, props.pageSize)
+        }}
+                     className={props.currentPage === el ? style.currentPage : style.page}>{el}</span>
     })
 
 
@@ -34,11 +37,11 @@ const DocList = (props) => {
             <DocHeaderContainer/>
             {
                 props.docList.map(docEl =>
-                    <Doc key={docEl.id} docEl={docEl} updateDoc={props.updateDoc} deleteDoc={props.deleteDoc}/>
+                    <Doc key={docEl.id} docEl={docEl} updateDoc={props.updateDoc} deleteDoc={props.deleteDoc}
+                    field={props.field} sort={props.sort} pageSize={props.pageSize} currentPage={props.currentPage}/>
                 )
             }
             {pagination}
-            {/*<div className={style.docsCount}>Всего документов: {props.docsCount}</div>*/}
         </div>
     )
 }

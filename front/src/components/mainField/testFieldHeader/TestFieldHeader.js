@@ -7,21 +7,20 @@ const TestFieldHeader = (props) => {
 
     let testName = useParams()
 
+    let checkCalculation = () => {
+        props.checkCalculation(props.field, props.sort, props.pageSize, props.currentPage)
+    }
+
     return(
         <div className={style.testFieldHeader}>
             <NavLink to={"/test/calc/addDoc"} className={style.addDocNavLink}>
                 <div>Добавить документ в чек лист</div>
             </NavLink>
-            <div className={style.checkButton} onClick={() => {props.checkCalculation()}}>Проверить расчет</div>
+            <div className={style.checkButton} onClick={() => {checkCalculation()}}>Проверить расчет</div>
             <div className={style.testName}>
             <h1>{testName.name}</h1>
             </div>
         </div>
     )
-    // return(
-    //     <div className={style.testFieldHeader}>
-    //         <h1>{testName.name}</h1>
-    //     </div>
-    // )
 }
 export default TestFieldHeader;

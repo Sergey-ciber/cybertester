@@ -1,10 +1,13 @@
 import React from "react";
 import TestFieldHeader from "./TestFieldHeader";
-import {checkCalculation} from "../../../redax/calcReducer";
+import {checkCalculation, setFieldName} from "../../../redax/calcReducer";
 import {connect} from "react-redux";
 
 let mapStateToProps = (state) => {
-    return {obj: "a"}
+    return {sort: state.calcTestData.sort,
+    field: state.calcTestData.fieldName,
+    currentPage: state.calcTestData.currentPage,
+        pageSize: state.calcTestData.pageSize}
 }
 
 const TestFieldHeaderContainer = connect(mapStateToProps, {checkCalculation})(TestFieldHeader)

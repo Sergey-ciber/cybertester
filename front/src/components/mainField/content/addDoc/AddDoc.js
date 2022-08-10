@@ -9,11 +9,11 @@ const AddDoc = (props) => {
     let addDocRef = React.createRef();
 
     let onAddDoc = () => {
-        props.addDocsToDocsList(recordUqText)
+        props.addDocsToDocsList(recordUqText, props.field, props.sort, props.pageSize, props.currentPage)
         setRecordUqText("")
     }
 
-    let updateRecordUqText = (e) => {debugger
+    let updateRecordUqText = (e) => {
         setRecordUqText(e.target.value);
     }
 
