@@ -1,26 +1,25 @@
 import React from "react";
 import style from './Content.module.css'
-import DocList from "./docList/DocList";
-import DocErrors from "./docErrors/DocErrors";
 import {useParams} from "react-router-dom";
-import AddDocContainer from "./addDoc/AddDocContainer";
-import DocListContainer from "./docList/DocListContainer";
-import DocErrorsContainer from "./docErrors/DocErrorsContainer";
+import AddDoc from "./addDoc/AddDoc";
+import DocErrors from "./docErrors/DocErrors";
+import DocList from "./docList/DocList";
 
-const Content = (props) => {
+const Content = (props) => {debugger
 
     let param = useParams();
     let el = () => {
         if (param.id === "addDoc") {
-            return <AddDocContainer />
-        } else {
-            return <DocErrorsContainer/>
+            return <AddDoc />
+        }
+        else {
+            return <DocErrors/>
         }
     }
 
     return (
         <div className={style.content}>
-            <DocListContainer />
+            <DocList />
             {el()}
         </div>
     )

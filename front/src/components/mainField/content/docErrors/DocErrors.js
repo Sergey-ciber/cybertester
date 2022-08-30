@@ -1,13 +1,16 @@
 import React from "react";
 import style from './DocErrors.module.css'
 import {useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 const DocErrors = (props) => {
 
     let param = useParams();
 
+    const docList = useSelector(state => state.calcTestData.docList)
+
     let el = () => {
-        let docInfo = props.docList.filter(el => {
+        let docInfo = docList.filter(el => {
             return (el.id === Number(param.id))
         })
         return (docInfo[0]) ? docInfo[0] :

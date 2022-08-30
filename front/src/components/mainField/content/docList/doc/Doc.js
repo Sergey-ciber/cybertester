@@ -4,10 +4,18 @@ import {NavLink} from "react-router-dom";
 import greenCheckMark from '../../../../../assets/greenСheckMark.png'
 import redCheckMark from '../../../../../assets/redCheckMark.png'
 import trash from '../../../../../assets/trash.png'
+import {useDispatch, useSelector} from "react-redux";
+import {deleteDoc, updateDoc} from "../../../../../redax/calcReducer";
 
 const Doc = (props) => {
 
-    let updateDoc = () => {
+    const dispatch = useDispatch()
+    const fieldName = useSelector(state => state.calcTestData.fieldName)
+    const sort = useSelector(state => state.calcTestData.sort)
+    const pageSize = useSelector(state => state.calcTestData.pageSize)
+    const currentPage  = useSelector(state => state.calcTestData.currentPage)
+
+    let updateThisDoc = () => {
         let newDoc = {
             id: props.docEl.id,
             guidInput: props.docEl.guidInput,
@@ -17,18 +25,18 @@ const Doc = (props) => {
             message: props.docEl.message,
             checkDate: props.docEl.checkDate
         }
-        props.updateDoc(newDoc, props.field, props.sort, props.pageSize, props.currentPage)
+        dispatch(updateDoc(newDoc, fieldName, sort, pageSize, currentPage))
     }
 
-    let deleteDoc = (id) => {
-        props.deleteDoc(id, props.field, props.sort, props.pageSize, props.currentPage)
+    let deleteThisDoc = (id) => {
+        dispatch(deleteDoc(id, fieldName, sort, pageSize, currentPage))
     }
 
     let checkbox = () => {
         if (props.docEl.doCheck === 1) {
-           return <input type="checkbox" id="doCheck" onChange={() => updateDoc()} name="doCheck" defaultChecked={"checked"}/>
+           return <input type="checkbox" id="doCheck" onChange={() => updateThisDoc()} name="doCheck" defaultChecked={"checked"}/>
         } else{
-            return <input type="checkbox" onChange={() => updateDoc()}  id="doCheck" name="doCheck" />
+            return <input type="checkbox" onChange={() => updateThisDoc()}  id="doCheck" name="doCheck" />
         }
     }
 
@@ -50,7 +58,7 @@ const Doc = (props) => {
             <div className={style.checkBox}>
                 {checkbox()}
             </div>
-            <div onClick={() => {deleteDoc(props.docEl.id)}} className={style.trash}>
+            <div onClick={() => {deleteThisDoc(props.docEl.id)}} className={style.trash}>
                 <img src={trash}/>
             </div>
         </div>

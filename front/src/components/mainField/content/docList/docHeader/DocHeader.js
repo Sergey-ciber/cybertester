@@ -1,31 +1,38 @@
 import React, {useState} from "react";
 import style from './DocHeader.module.css'
-import {getDocsWithPaginationAndSort} from "../../../../../redax/calcReducer";
+import {getDocsWithPaginationAndSort, setFieldName, setSort} from "../../../../../redax/calcReducer";
+import {useDispatch, useSelector} from "react-redux";
 
 const DocHeader = (props) => {
 
-    let sortBy = (field) => {
+    const dispatch = useDispatch()
+    const fieldName = useSelector(state => state.calcTestData.fieldName)
+    const pageSize = useSelector(state => state.calcTestData.pageSize)
+    const currentPage  = useSelector(state => state.calcTestData.currentPage)
+    const sort = useSelector(state => state.calcTestData.sort)
+
+    let sortBy = (SortField) => {
 
         //sort - больше / меньше
         // fieldName - название столбца id
 
         // Сортировка документов
-        if (props.field === null) {
-            props.setFieldName(field)
-            props.getDocsWithPaginationAndSort(field, "asc", props.currentPage, props.pageSize)
-            props.setSort(false)
-        } else if (props.field === field) {
-            if (props.sort === false) {
-                props.getDocsWithPaginationAndSort(field, "desc", props.currentPage, props.pageSize)
-                props.setSort(true)
+        if (fieldName === null) {
+            dispatch(setFieldName(SortField))
+            dispatch(getDocsWithPaginationAndSort(SortField, "asc", currentPage, pageSize))
+            dispatch(setSort(false))
+        } else if (fieldName === SortField) {
+            if (sort === false) {
+                dispatch(getDocsWithPaginationAndSort(SortField, "desc", currentPage, pageSize))
+                dispatch(setSort(true))
             } else {
-                props.getDocsWithPaginationAndSort(field, "asc", props.currentPage, props.pageSize)
-                props.setSort(false)
+                dispatch(getDocsWithPaginationAndSort(SortField, "asc", currentPage, pageSize))
+                dispatch(setSort(false))
             }
-        } else if (props.field !== field) {
-            props.getDocsWithPaginationAndSort(field, "asc", props.currentPage, props.pageSize)
-            props.setSort(false)
-            props.setFieldName(field)
+        } else if (fieldName !== SortField) {
+            dispatch(getDocsWithPaginationAndSort(SortField, "asc",currentPage, pageSize))
+            dispatch(setSort(false))
+            dispatch(setFieldName(SortField))
         }
     }
 

@@ -20,3 +20,8 @@
     margin-left: 1%;
     cursor: pointer;
 }
+.totalDocsCount{
+    display: grid;
+    justify-items: center;
+    font-weight: bold;
+}

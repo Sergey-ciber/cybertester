@@ -2,17 +2,24 @@ import React, {useEffect} from "react";
 import style from './DocList.module.css'
 import DocHeader from "./docHeader/DocHeader";
 import Doc from "./doc/Doc";
-import axios from "axios";
-import DocHeaderContainer from "./docHeader/DocHeaderContainer";
-
+import {useDispatch, useSelector} from "react-redux";
+import {getDocsWithPaginationAndSort} from "../../../../redax/calcReducer";
 
 const DocList = (props) => {
 
+    const dispatch = useDispatch()
+    const totalDocsCount = useSelector(state => state.calcTestData.totalDocsCount)
+    const fieldName = useSelector(state => state.calcTestData.fieldName)
+    const sort = useSelector(state => state.calcTestData.sort)
+    const pageSize = useSelector(state => state.calcTestData.pageSize)
+    const currentPage  = useSelector(state => state.calcTestData.currentPage)
+    const docList  = useSelector(state => state.calcTestData.docList)
+
     useEffect(() => {
-        getDocsWithPaginationAndSort("id", "asc", 1, props.pageSize)
+        dispatch(getDocsWithPaginationAndSort("id", "asc", 1, pageSize))
     }, [])
 
-    let pagesCount = Math.ceil(props.totalDocsCount / props.pageSize)
+    let pagesCount = Math.ceil(totalDocsCount / pageSize)
 
     let pages = []
 
@@ -20,28 +27,28 @@ const DocList = (props) => {
         pages.push(i)
     }
 
-    let getDocsWithPaginationAndSort = (field, sort, currentPage, pageSize) => {
-        props.getDocsWithPaginationAndSort(field, sort, currentPage, pageSize)
+    let getDocsWithPagAndSort = (field, sort, currentPage, pageSize) => {
+        dispatch(getDocsWithPaginationAndSort(field, sort, currentPage, pageSize))
     }
 
     let pagination = pages.map(el => {
         return <span onClick={() => {
-            getDocsWithPaginationAndSort(props.field, props.sort, el, props.pageSize)
+            dispatch(getDocsWithPaginationAndSort(fieldName, sort, el, pageSize))
         }}
-                     className={props.currentPage === el ? style.currentPage : style.page}>{el}</span>
+                     className={currentPage === el ? style.currentPage : style.page}>{el}</span>
     })
 
 
     return (
         <div className={style.docList}>
-            <DocHeaderContainer/>
+            <DocHeader/>
             {
-                props.docList.map(docEl =>
-                    <Doc key={docEl.id} docEl={docEl} updateDoc={props.updateDoc} deleteDoc={props.deleteDoc}
-                    field={props.field} sort={props.sort} pageSize={props.pageSize} currentPage={props.currentPage}/>
+                docList.map(docEl =>
+                    <Doc key={docEl.id} docEl={docEl}/>
                 )
             }
             {pagination}
+            <div className={style.totalDocsCount}>{`Общее количество записей: ${totalDocsCount}`}</div>
         </div>
     )
 }

@@ -6,3 +6,7 @@
 .addForm{
     align-items: start;
 }
+.textField{
+    background-color: white;
+    font-size: small;
+}

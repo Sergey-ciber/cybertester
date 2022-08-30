@@ -32,3 +32,4 @@ spring:
 #    init:
 #      mode: always
 #      schema-locations: classpath*:database/schema.sql
+

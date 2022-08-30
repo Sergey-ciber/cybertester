@@ -6,12 +6,16 @@ const SET_DOC_LIST = 'SET-DOC-LIST'
 const SET_SORT = 'SET-SORT'
 const SET_FIELD_NAME = 'SET-FIELD-NAME'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
+const SET_TEXT_FIELD_ERROR = 'SET-TEXT-FIELD-ERROR'
+const SET_PRELOADER = 'SET-PRELOADER'
 
 let initialState = {
+    preloader: false,
+    textFieldError: false,
     recordUqText: "",
     fieldName: "id",
     totalDocsCount: 20,
-    pageSize: 30,
+    pageSize: 20,
     currentPage: 1,
     sort: "asc",
     docList: []
@@ -20,7 +24,18 @@ let initialState = {
 const calcReducer = (state = initialState, action) => {
 
     switch (action.type) {
-
+        case SET_PRELOADER: {
+            return {
+                ...state,
+                preloader: action.preloader
+            }
+        }
+        case SET_TEXT_FIELD_ERROR: {
+            return {
+                ...state,
+                textFieldError: action.textFieldError
+            }
+        }
         case SET_CURRENT_PAGE: {
             return {
                 ...state,
@@ -71,6 +86,14 @@ const calcReducer = (state = initialState, action) => {
     }
 }
 
+export const setPreloader = (preloader) => {
+    return {type: SET_PRELOADER, preloader}
+}
+
+export const setTextFieldError = (textFieldError) => {
+    return {type: SET_TEXT_FIELD_ERROR, textFieldError}
+}
+
 export const updateRecordUqText = (text) => {
     return {type: UPDATE_RECORD_UQ_TEXT, text}
 }
@@ -111,45 +134,56 @@ export const getDocsThunkCreator = () => {
 
 export const addDocsToDocsList = (recordUqText, field, sort, pageSize, offset) => {
 
-
     return (dispatch) => {
+        dispatch(setPreloader(true))
         axios.get(`http://localhost:8090/calc/addDocs?recordUqDocs=${recordUqText}&field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
             .then(response => {
-            dispatch(setDocList(response.data.docList, response.data.docsCount))
-        })
+                dispatch(setDocList(response.data.docList, response.data.docsCount))
+                dispatch(setPreloader(false))
+            })
     }
 }
 
 export const updateDoc = (doc, field, sort, pageSize, offset) => {
 
     return (dispatch) => {
+        dispatch(setPreloader(true))
         axios.post(`http://localhost:8090/calc/update/${doc.id}?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`, doc)
             .then(response => {
-            dispatch(setDocList(response.data.docList, response.data.docsCount))
-        })
+                dispatch(setDocList(response.data.docList, response.data.docsCount))
+                dispatch(setPreloader(false))
+            })
     }
 }
 
 export const checkCalculation = (field, sort, pageSize, offset) => {
 
     return (dispatch) => {
+        dispatch(setPreloader(true))
         axios.get(`http://localhost:8090/calc/checkDocs?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
             .then(response => {
-            dispatch(setDocList(response.data.docList, response.data.docsCount))
-        })
+                dispatch(setDocList(response.data.docList, response.data.docsCount))
+                dispatch(setPreloader(false))
+            })
     }
 }
 
 export const deleteDoc = (docId, field, sort, pageSize, offset) => {
     return (dispatch) => {
+        dispatch(setPreloader(true))
         axios.delete(`http://localhost:8090/calc/delete/${docId}?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
             .then(response => {
-                if(response.data.h === "OK") {dispatch(setDocList(response.data.docList, response.data.docsCount))}
-                    else{dispatch(setCurrentPage(offset -1))
+                if (response.data.h === "OK") {
+                    dispatch(setDocList(response.data.docList, response.data.docsCount))
+                    dispatch(setPreloader(false))
+                } else {
+                    dispatch(setCurrentPage(offset - 1))
                     axios.get(`http://localhost:8090/calc/pagination/sort?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 2}`)
                         .then(response => {
                             dispatch(setDocList(response.data.docList, response.data.docsCount))
-                        })}
+                            dispatch(setPreloader(false))
+                        })
+                }
             })
     }
 }
@@ -157,10 +191,12 @@ export const deleteDoc = (docId, field, sort, pageSize, offset) => {
 export const getDocsWithPaginationAndSort = (field, sort, offset, pageSize) => {
 
     return (dispatch) => {
+        dispatch(setPreloader(true))
         axios.get(`http://localhost:8090/calc/pagination/sort?field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
             .then(response => {
                 dispatch(setCurrentPage(offset))
                 dispatch(setDocList(response.data.docList, response.data.docsCount))
+                dispatch(setPreloader(false))
             })
     }
 }

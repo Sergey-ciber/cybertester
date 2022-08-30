@@ -2,13 +2,14 @@ package com.cybertester.controllers;
 
 import com.cybertester.components.CalcAPIResponse;
 import com.cybertester.entity.testCalc.TestCalcCheckListEntity;
+import com.cybertester.seleniumTests.RecalcDocs;
 import com.cybertester.service.testCalc.TestCalcCheckListService;
 import com.cybertester.utils.CalcUtility;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,10 +17,12 @@ import java.util.List;
 @CrossOrigin
 public class CalcController {
 
+    final private RecalcDocs recalcDocs;
     final private CalcUtility calcUtility;
     final private TestCalcCheckListService testCalcCheckListService;
 
-    public CalcController(CalcUtility calcUtility, TestCalcCheckListService testCalcCheckListService) {
+    public CalcController(RecalcDocs recalcDocs, CalcUtility calcUtility, TestCalcCheckListService testCalcCheckListService) {
+        this.recalcDocs = recalcDocs;
         this.calcUtility = calcUtility;
         this.testCalcCheckListService = testCalcCheckListService;
     }
@@ -65,7 +68,8 @@ public class CalcController {
                                                                     @RequestParam("sort") String sort,
                                                                     @RequestParam("pageSize") int pageSize,
                                                                     @RequestParam("offset") int offset
-    ) {
+    ) throws IOException {
+        recalcDocs.recalcDocs();
         calcUtility.goCalcCheckList();
 
         return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
