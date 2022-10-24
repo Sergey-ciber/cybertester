@@ -1,6 +1,6 @@
 .doc{
     display: grid;
-    grid-template-columns: 88% 6% 6%;
+    grid-template-columns: 87% 6% 4% 3%;
     margin: 1%;
     font-size: small;
     border-bottom: gold solid 1px;
@@ -29,5 +29,10 @@ nav.active{
 .trash{
     display: grid;
     justify-items: center;
+    cursor: pointer;
+}
+.updateCalcResult{
+    display: grid;
+    justify-items: right;
     cursor: pointer;
 }

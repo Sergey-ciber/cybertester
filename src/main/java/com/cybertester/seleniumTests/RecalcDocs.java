@@ -1,7 +1,9 @@
 package com.cybertester.seleniumTests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -27,6 +29,8 @@ public class RecalcDocs {
 
         Properties properties = new Properties();
 
+        WebDriver driver;
+
         FileInputStream seleniumProperties = new FileInputStream("src/main/resources/selenium.properties");
         properties.load(seleniumProperties);
 
@@ -34,13 +38,16 @@ public class RecalcDocs {
         String dateEnd = "31.12.2022 00:00:00";
 
 
-        System.setProperty("webdriver.chrome.driver", "C:\\SeleniumDrivers\\chromedriver.exe");
+//        System.setProperty("webdriver.chrome.driver", "C:\\SeleniumDrivers\\chromedriver.exe");
 
 //       ** Режим без интерфейса **
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
 
-        ChromeDriver driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+
+//        ChromeDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(600));
         Actions actions = new Actions(driver);
 

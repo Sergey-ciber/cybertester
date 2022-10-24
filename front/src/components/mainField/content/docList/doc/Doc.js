@@ -4,8 +4,9 @@ import {NavLink} from "react-router-dom";
 import greenCheckMark from '../../../../../assets/greenСheckMark.png'
 import redCheckMark from '../../../../../assets/redCheckMark.png'
 import trash from '../../../../../assets/trash.png'
+import updateIcon from '../../../../../assets/update1.png'
 import {useDispatch, useSelector} from "react-redux";
-import {deleteDoc, updateDoc} from "../../../../../redax/calcReducer";
+import {deleteDoc, updateCalcResult, updateDoc} from "../../../../../redax/calcReducer";
 
 const Doc = (props) => {
 
@@ -26,6 +27,11 @@ const Doc = (props) => {
             checkDate: props.docEl.checkDate
         }
         dispatch(updateDoc(newDoc, fieldName, sort, pageSize, currentPage))
+    }
+
+    // Обновить результат расчета
+    let updateThisCalcResult = (recordUQ) => {
+        dispatch(updateCalcResult(recordUQ))
     }
 
     let deleteThisDoc = (id) => {
@@ -60,6 +66,9 @@ const Doc = (props) => {
             </div>
             <div onClick={() => {deleteThisDoc(props.docEl.id)}} className={style.trash}>
                 <img src={trash}/>
+            </div>
+            <div onClick={() => updateThisCalcResult(props.docEl.recordUqRegistr)} className={style.updateCalcResult}>
+                <img src={updateIcon}/>
             </div>
         </div>
     )

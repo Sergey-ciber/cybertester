@@ -1,0 +1,15 @@
+.updateMessage{
+    display: grid;
+    justify-items: center;
+    margin-top: 20%;
+    margin-left: 25%;
+    padding: 2%;
+    position: fixed;
+    z-index: 100;
+    top: 75px;
+    width: 20%;
+    height: 15%;
+    background-color: gold;
+    border-radius: 5px;
+    border: 1px solid black;
+}

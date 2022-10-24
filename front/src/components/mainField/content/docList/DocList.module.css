@@ -25,3 +25,11 @@
     justify-items: center;
     font-weight: bold;
 }
+.docInfo{
+    display: grid;
+    justify-items: center;
+    font-weight: bold;
+}
+.countErrors{
+    color: red;
+}

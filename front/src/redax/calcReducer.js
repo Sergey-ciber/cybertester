@@ -8,14 +8,17 @@ const SET_FIELD_NAME = 'SET-FIELD-NAME'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_TEXT_FIELD_ERROR = 'SET-TEXT-FIELD-ERROR'
 const SET_PRELOADER = 'SET-PRELOADER'
+const UPDATE_CALC_RESULT = 'UPDATE-CALC-RESULT'
+const UPDATE_MESSAGE_SWITCH = 'UPDATE-MESSAGE-SWITCH'
 
 let initialState = {
+    updateMessageSwitch: false,
     preloader: false,
     textFieldError: false,
     recordUqText: "",
     fieldName: "id",
     totalDocsCount: 20,
-    pageSize: 20,
+    pageSize: 25,
     currentPage: 1,
     sort: "asc",
     docList: []
@@ -24,6 +27,12 @@ let initialState = {
 const calcReducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case UPDATE_MESSAGE_SWITCH: {
+            return {
+                ...state,
+                updateMessageSwitch: action.updateMessageSwitch
+            }
+        }
         case SET_PRELOADER: {
             return {
                 ...state,
@@ -86,6 +95,10 @@ const calcReducer = (state = initialState, action) => {
     }
 }
 
+export const updateMessageSwitch = (updateMessageSwitch) => {
+    return {type: UPDATE_MESSAGE_SWITCH, updateMessageSwitch}
+}
+
 export const setPreloader = (preloader) => {
     return {type: SET_PRELOADER, preloader}
 }
@@ -114,6 +127,18 @@ export const setDocList = (docList, docsCount) => {
 
 export const setCurrentPage = (currentPage) => {
     return {type: SET_CURRENT_PAGE, currentPage}
+}
+
+export const updateCalcResult = (recordUQ) => {
+    return (dispatch) => {
+        dispatch(setPreloader(true))
+        axios.get(`http://localhost:8090/calc/updateCalcResult?recordUQ=${recordUQ}`).then(response => {
+            if(response.data === 'OK') {
+                dispatch(updateMessageSwitch(true))
+                dispatch(setPreloader(false))
+            }
+        })
+    }
 }
 
 export const getDocsWithSort = (field, sort) => {

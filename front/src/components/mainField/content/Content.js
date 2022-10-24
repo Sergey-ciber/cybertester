@@ -5,7 +5,7 @@ import AddDoc from "./addDoc/AddDoc";
 import DocErrors from "./docErrors/DocErrors";
 import DocList from "./docList/DocList";
 
-const Content = (props) => {debugger
+const Content = (props) => {
 
     let param = useParams();
     let el = () => {

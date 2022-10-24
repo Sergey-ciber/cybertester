@@ -75,6 +75,14 @@ public class CalcController {
         return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 
+    // Обновляем результаты расчетов
+    @GetMapping("/updateCalcResult")
+    public String updateCalcResult(@RequestParam("recordUQ") long recordUQ) {
+
+        calcUtility.saveCalcResultByRecordUqRegistr(recordUQ);
+        return "OK";
+    }
+
     // Добавляем документы в список
     @GetMapping("/addDocs")
     public CalcAPIResponse<List<TestCalcCheckListEntity>> addDoc(@RequestParam("recordUqDocs") String recordUqDocs,

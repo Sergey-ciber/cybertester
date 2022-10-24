@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import style from './DocList.module.css'
 import DocHeader from "./docHeader/DocHeader";
 import Doc from "./doc/Doc";
@@ -7,13 +7,14 @@ import {getDocsWithPaginationAndSort} from "../../../../redax/calcReducer";
 
 const DocList = (props) => {
 
+    const [countErrors, setCountErrors] = useState(4);
     const dispatch = useDispatch()
     const totalDocsCount = useSelector(state => state.calcTestData.totalDocsCount)
     const fieldName = useSelector(state => state.calcTestData.fieldName)
     const sort = useSelector(state => state.calcTestData.sort)
     const pageSize = useSelector(state => state.calcTestData.pageSize)
-    const currentPage  = useSelector(state => state.calcTestData.currentPage)
-    const docList  = useSelector(state => state.calcTestData.docList)
+    const currentPage = useSelector(state => state.calcTestData.currentPage)
+    const docList = useSelector(state => state.calcTestData.docList)
 
     useEffect(() => {
         dispatch(getDocsWithPaginationAndSort("id", "asc", 1, pageSize))
@@ -48,7 +49,11 @@ const DocList = (props) => {
                 )
             }
             {pagination}
-            <div className={style.totalDocsCount}>{`Общее количество записей: ${totalDocsCount}`}</div>
+            <div className={style.docInfo}>
+                {/*<div className={style.countErrors}>Количество ошибок: {countErrors}</div>*/}
+                <div className={style.totalDocsCount}>{`Общее количество записей: ${totalDocsCount}`}</div>
+            </div>
+
         </div>
     )
 }
