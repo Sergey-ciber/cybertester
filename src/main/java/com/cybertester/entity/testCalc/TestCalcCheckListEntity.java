@@ -35,6 +35,9 @@ public class TestCalcCheckListEntity {
     @Column(name = "message")
     private String message;
 
+    @Column(name = "case_description")
+    private String caseDescription;
+
     @Override
     public String toString() {
         return "TestDocsListEntity{" +

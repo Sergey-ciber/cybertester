@@ -172,7 +172,7 @@ public class CalcUtility {
 
 
     // Добавляе в чек личт элемнт из DX_REGISTR по RECORD_UQ
-    public void addDocToCalcCheckList(long recordUqRegistr) {
+    public void addDocToCalcCheckList(long recordUqRegistr, String caseDescription) {
 
         StandardDxRegistrEntity sDxRegistr = standardDxRegistrService.getByRecordUq(recordUqRegistr);
 
@@ -183,6 +183,7 @@ public class CalcUtility {
             tc.setRecordUqRegistr(recordUqRegistr);
             tc.setGuidInput(sDxRegistr.getGuidInput());
             tc.setDoCheck(1);
+            tc.setCaseDescription(caseDescription);
 
             TestCalcCheckListEntity t = testCalcCheckListService.getFirstByRecordUqRegistr(recordUqRegistr);
 
@@ -218,12 +219,12 @@ public class CalcUtility {
     }
 
     // Добавляем доки в чек лист из списка по RECORD_UQ_REGISTR
-    public void addListRecordUqStringToCalcCheckList(String listRecordUq) {
+    public void addListRecordUqStringToCalcCheckList(String listRecordUq, String caseDescription) {
 
         long[] recordUqArr = convertStringRecordUqRegistrToArr(listRecordUq);
 
         for (long recordUq : recordUqArr) {
-            addDocToCalcCheckList(recordUq);
+            addDocToCalcCheckList(recordUq, caseDescription);
         }
     }
 }

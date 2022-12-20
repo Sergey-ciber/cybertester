@@ -1,12 +1,15 @@
 .addDoc{
     display: grid;
     margin-left: 5%;
+    margin-top: 2%;
     grid-template-rows: 5% 95%;
 }
 .addForm{
     align-items: start;
 }
-.textField{
+body .textField{
     background-color: white;
     font-size: small;
+    margin-top: 1%;
+    margin-bottom: 5%;
 }

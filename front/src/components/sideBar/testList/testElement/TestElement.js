@@ -6,7 +6,7 @@ const TestElement = (props) => {
 
     return(
         <div className={style.testElement}>
-            <NavLink to={props.link} >{props.testName}</NavLink>
+            <NavLink to={props.link} id={props.id}>{props.testName}</NavLink>
         </div>
     )
 }

@@ -27,6 +27,7 @@ public class RecalcDocs {
 
     public void recalcDocs() throws IOException {
 
+
         Properties properties = new Properties();
 
         WebDriver driver;

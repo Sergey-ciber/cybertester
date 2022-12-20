@@ -1,7 +1,12 @@
 import React, {useState} from "react";
 import style from './AddDoc.module.css'
 import TextField from "@mui/material/TextField";
-import {addDocsToDocsList, setTextFieldError} from "../../../../redax/calcReducer";
+import {
+    addDocsToDocsList,
+    setTextFieldError,
+    updateCaseDescription,
+    updateRecordUqText
+} from "../../../../redax/calcReducer";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -12,24 +17,33 @@ const AddDoc = (props) => {
     const fieldName = useSelector(state => state.calcTestData.fieldName)
     const sort = useSelector(state => state.calcTestData.sort)
     const pageSize = useSelector(state => state.calcTestData.pageSize)
-    const currentPage  = useSelector(state => state.calcTestData.currentPage)
+    const currentPage = useSelector(state => state.calcTestData.currentPage)
+    const caseDescription = useSelector(state => state.calcTestData.caseDescription)
+    const recordUqText = useSelector(state => state.calcTestData.recordUqText)
 
-    const [recordUqText, setRecordUqText] = useState()
+    //Use state
 
     let addDocRef = React.createRef();
 
     let onAddDoc = () => {
         if (textFieldError !== true && recordUqText !== undefined) {
             dispatch(addDocsToDocsList(recordUqText, fieldName, sort, pageSize, currentPage))
-            setRecordUqText("")
+            dispatch(updateRecordUqText(""))
+            dispatch(updateCaseDescription(""))
         } else {
-            setRecordUqText("")
-        dispatch(setTextFieldError(false))}
+            dispatch(updateRecordUqText(""))
+            dispatch(updateCaseDescription(""))
+            dispatch(setTextFieldError(false))
+        }
     }
 
-    let updateRecordUqText = (e) => {debugger
+    let onUpdateCaseDescription = (e) => {
+        dispatch(updateCaseDescription(e.target.value))
+    }
+
+    let onUpdateRecordUqText = (e) => {
         let re = /[a-zA-Z" "а-яА-Я.!@#$%^&*(){}]/
-        setRecordUqText(e.target.value);
+        dispatch(updateRecordUqText(e.target.value))
         dispatch(setTextFieldError(false))
         for (let i = 0; i < e.target.value.length; i++) {
             if (re.test(e.target.value[i])) {
@@ -40,12 +54,12 @@ const AddDoc = (props) => {
 
     let textField = () => {
         if (textFieldError) {
-            return <TextField ref={addDocRef} onChange={(updateRecordUqText)} value={recordUqText}
+            return <TextField ref={addDocRef} onChange={(onUpdateRecordUqText)} value={recordUqText}
                               className={style.textField} id="outlined-basic" label="Не корректный символ"
                               variant="outlined"
                               error/>
         } else {
-            return <TextField ref={addDocRef} onChange={(updateRecordUqText)} value={recordUqText}
+            return <TextField ref={addDocRef} onChange={(onUpdateRecordUqText)} value={recordUqText}
                               className={style.textField} id="outlined-basic" label="Цифры через запятую"
                               variant="outlined" required/>
         }
@@ -53,11 +67,22 @@ const AddDoc = (props) => {
 
     return (
         <div className={style.addDoc}>
-            <span>Добавить документ в чек лист</span>
+            <h3>Добавить документ в чек лист:</h3>
             <div className={style.addForm}>
-                {
-                    textField()
-                }
+                <div className={style.addRecordUq}>
+                    <span>RecordUq документа:</span>
+                    {
+                        textField()
+                    }
+                </div>
+                <div>
+                    <span>Описание:</span>
+                    <div className={style.desciptionField}>
+                        <TextField ref={addDocRef} onChange={(onUpdateCaseDescription)} value={caseDescription}
+                                   className={style.textField} id="outlined-basic" label="Описание кейса"
+                                   variant="outlined" required/>
+                    </div>
+                </div>
                 <div>
                     <button onClick={onAddDoc}>Добавить</button>
                 </div>

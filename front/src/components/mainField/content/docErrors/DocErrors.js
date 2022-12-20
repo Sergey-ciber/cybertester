@@ -35,7 +35,11 @@ const DocErrors = (props) => {
             <div>RECORD UQ = {docInfoEl.recordUqRegistr}</div>
             <div>GUID INPUT = {docInfoEl.guidInput}</div>
             <div>Результат расчета {(docInfoEl.calcResult === 1) ? "верный" : "не верный"}</div>
-            <div>Список ошибок: <br/> {docInfoEl.message}</div>
+            <div>
+                <div>Список ошибок: <br/> {docInfoEl.message}</div>
+                <br/>
+                <div>Описание кейca: <br/> {docInfoEl.caseDescription}</div>
+            </div>
         </div>
     )
 }

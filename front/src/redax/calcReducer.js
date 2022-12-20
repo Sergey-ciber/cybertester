@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const UPDATE_RECORD_UQ_TEXT = 'UPDATE-RECORD-UQ-TEXT'
-const ADD_DOC = 'ADD-DOC'
+const UPDATE_CASE_DESCRIPTION = 'UPDATE-CASE-DESCRIPTION'
+// const ADD_DOC = 'ADD-DOC'
 const SET_DOC_LIST = 'SET-DOC-LIST'
 const SET_SORT = 'SET-SORT'
 const SET_FIELD_NAME = 'SET-FIELD-NAME'
@@ -12,6 +13,7 @@ const UPDATE_CALC_RESULT = 'UPDATE-CALC-RESULT'
 const UPDATE_MESSAGE_SWITCH = 'UPDATE-MESSAGE-SWITCH'
 
 let initialState = {
+    caseDescription: "",
     updateMessageSwitch: false,
     preloader: false,
     textFieldError: false,
@@ -75,24 +77,33 @@ const calcReducer = (state = initialState, action) => {
                 ...state, recordUqText: action.text
             }
         }
-        case ADD_DOC: {
-            let newDoc = {
-                id: 5,
-                recordUqRegistr: Number(state.recordUqText),
-                guidInput: "E40F5D1A19CAAA05E0530813E00A865E",
-                doCheck: 1,
-                date: "2022-07-21",
-                calcResult: false
-            }
+        case UPDATE_CASE_DESCRIPTION: {
             return {
-                ...state,
-                recordUqText: "",
-                docList: [newDoc, ...state.docList]
+                ...state, caseDescription: action.caseDescription
             }
         }
+        // case ADD_DOC: {
+        //     let newDoc = {
+        //         id: 5,
+        //         recordUqRegistr: Number(state.recordUqText),
+        //         guidInput: "E40F5D1A19CAAA05E0530813E00A865E",
+        //         doCheck: 1,
+        //         date: "2022-07-21",
+        //         calcResult: false
+        //     }
+        //     return {
+        //         ...state,
+        //         recordUqText: "",
+        //         docList: [newDoc, ...state.docList]
+        //     }
+        // }
         default:
             return state
     }
+}
+
+export const updateCaseDescription = (caseDescription) => {
+    return {type: UPDATE_CASE_DESCRIPTION, caseDescription}
 }
 
 export const updateMessageSwitch = (updateMessageSwitch) => {
@@ -111,9 +122,9 @@ export const updateRecordUqText = (text) => {
     return {type: UPDATE_RECORD_UQ_TEXT, text}
 }
 
-export const addDoc = () => {
-    return {type: ADD_DOC}
-}
+// export const addDoc = () => {
+//     return {type: ADD_DOC}
+// }
 export const setSort = (sort) => {
     return {type: SET_SORT, sort}
 }
@@ -133,7 +144,7 @@ export const updateCalcResult = (recordUQ) => {
     return (dispatch) => {
         dispatch(setPreloader(true))
         axios.get(`http://localhost:8090/calc/updateCalcResult?recordUQ=${recordUQ}`).then(response => {
-            if(response.data === 'OK') {
+            if (response.data === 'OK') {
                 dispatch(updateMessageSwitch(true))
                 dispatch(setPreloader(false))
             }
@@ -157,16 +168,30 @@ export const getDocsThunkCreator = () => {
     }
 }
 
-export const addDocsToDocsList = (recordUqText, field, sort, pageSize, offset) => {
+// export const addDocsToDocsList = (recordUqText, field, sort, pageSize, offset) => {
+//
+//     return (dispatch, getState) => {
+//         console.log(getState().caseDescription)
+//         dispatch(setPreloader(true))
+//         axios.get(`http://localhost:8090/calc/addDocs?recordUqDocs=${recordUqText}&caseDescription=${"this.caseDescription"}&field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
+//             .then(response => {
+//                 dispatch(setDocList(response.data.docList, response.data.docsCount))
+//                 dispatch(setPreloader(false))
+//             })
+//     }
+// }
 
-    return (dispatch) => {
-        dispatch(setPreloader(true))
-        axios.get(`http://localhost:8090/calc/addDocs?recordUqDocs=${recordUqText}&field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
-            .then(response => {
-                dispatch(setDocList(response.data.docList, response.data.docsCount))
-                dispatch(setPreloader(false))
-            })
-    }
+export const addDocsToDocsList = (recordUqText, field, sort, pageSize, offset) => (dispatch, getState) => {
+    let caseDescription = getState().calcTestData.caseDescription
+    let recordUqText = getState().calcTestData.recordUqText
+    console.log(caseDescription)
+    console.log(recordUqText)
+    dispatch(setPreloader(true))
+    axios.get(`http://localhost:8090/calc/addDocs?recordUqDocs=${recordUqText}&caseDescription=${caseDescription}&field=${field}&sort=${sort}&pageSize=${pageSize}&offset=${offset - 1}`)
+        .then(response => {
+            dispatch(setDocList(response.data.docList, response.data.docsCount))
+            dispatch(setPreloader(false))
+        })
 }
 
 export const updateDoc = (doc, field, sort, pageSize, offset) => {

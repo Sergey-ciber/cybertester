@@ -33,7 +33,7 @@ const DocList = (props) => {
     }
 
     let pagination = pages.map(el => {
-        return <span onClick={() => {
+        return <span key={el} onClick={() => {
             dispatch(getDocsWithPaginationAndSort(fieldName, sort, el, pageSize))
         }}
                      className={currentPage === el ? style.currentPage : style.page}>{el}</span>

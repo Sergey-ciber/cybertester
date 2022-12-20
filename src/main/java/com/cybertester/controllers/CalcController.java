@@ -86,12 +86,13 @@ public class CalcController {
     // Добавляем документы в список
     @GetMapping("/addDocs")
     public CalcAPIResponse<List<TestCalcCheckListEntity>> addDoc(@RequestParam("recordUqDocs") String recordUqDocs,
+                                                                 @RequestParam("caseDescription") String caseDescription,
                                                                  @RequestParam("field") String field,
                                                                  @RequestParam("sort") String sort,
                                                                  @RequestParam("pageSize") int pageSize,
                                                                  @RequestParam("offset") int offset) {
 
-        calcUtility.addListRecordUqStringToCalcCheckList(recordUqDocs);
+        calcUtility.addListRecordUqStringToCalcCheckList(recordUqDocs, caseDescription);
         return getDocsWithPaginationAndSortNew(field, sort, pageSize, offset);
     }
 

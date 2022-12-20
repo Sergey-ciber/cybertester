@@ -25,7 +25,7 @@ const TestFieldHeader = (props) => {
             </NavLink>
             <div className={style.checkButton} onClick={() => {checkThisCalculation()}}>Проверить расчет</div>
             <div className={style.testName}>
-            <h1>{testName.name}</h1>
+            <h1 id={"TestName"}>{testName.name}</h1>
             </div>
         </div>
     )
