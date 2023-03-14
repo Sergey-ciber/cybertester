@@ -14,7 +14,7 @@ app:
       class-driver: org.postgresql.Driver
       username: postgres
       password: serg6363
-      url: jdbc:postgresql://localhost:5433/cybertester
+      url: jdbc:postgresql://localhost:5435/cybertester
 
 
 spring:

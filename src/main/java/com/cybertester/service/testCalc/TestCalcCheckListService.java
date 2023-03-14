@@ -10,6 +10,8 @@ public interface TestCalcCheckListService {
 
     void create(TestCalcCheckListEntity testCalcCheckListEntity);
 
+    TestCalcCheckListEntity findById(long id);
+
     // Получаем список сущностей по RECORD_UQ
     List<TestCalcCheckListEntity> getAllByRecordUqRegistr(long recordUqRegistr);
 
@@ -25,6 +27,9 @@ public interface TestCalcCheckListService {
     TestCalcCheckListEntity getFirstById(long id);
 
     List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck);
+
+    // Поиск всех записей с ошибкой
+    List<TestCalcCheckListEntity> getAllByCalcResult(int calcResult);
 
     void deleteByRecordUqRegistr(long recordUqRegistr);
 

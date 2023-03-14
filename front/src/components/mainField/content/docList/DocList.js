@@ -7,9 +7,10 @@ import {getDocsWithPaginationAndSort} from "../../../../redax/calcReducer";
 
 const DocList = (props) => {
 
-    const [countErrors, setCountErrors] = useState(4);
+    // const [countErrors, setCountErrors] = useState(4);
     const dispatch = useDispatch()
     const totalDocsCount = useSelector(state => state.calcTestData.totalDocsCount)
+    const countError = useSelector(state => state.calcTestData.countError)
     const fieldName = useSelector(state => state.calcTestData.fieldName)
     const sort = useSelector(state => state.calcTestData.sort)
     const pageSize = useSelector(state => state.calcTestData.pageSize)
@@ -39,7 +40,6 @@ const DocList = (props) => {
                      className={currentPage === el ? style.currentPage : style.page}>{el}</span>
     })
 
-
     return (
         <div className={style.docList}>
             <DocHeader/>
@@ -52,6 +52,7 @@ const DocList = (props) => {
             <div className={style.docInfo}>
                 {/*<div className={style.countErrors}>Количество ошибок: {countErrors}</div>*/}
                 <div className={style.totalDocsCount}>{`Общее количество записей: ${totalDocsCount}`}</div>
+                <div>{`Количество ошибок: ${countError}`}</div>
             </div>
 
         </div>

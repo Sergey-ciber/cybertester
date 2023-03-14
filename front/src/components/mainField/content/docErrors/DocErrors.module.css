@@ -1,6 +1,10 @@
-.docErrors{
+.docErrors {
     display: grid;
     margin: 5%;
     grid-template-rows: 5% 5% 5% 5% 80%;
     font-size: small;
+}
+
+.errInfo div {
+    margin-top: 5%;
 }

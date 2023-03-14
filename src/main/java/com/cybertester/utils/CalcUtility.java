@@ -34,6 +34,9 @@ public class CalcUtility {
         this.testCalcCheckListService = testCalcCheckListService;
     }
 
+    // Получаем массив старых результатов расчетов по
+
+
     // Получаем RECORD_UQ по GUID_INPUT из ПВСО БД
 //    public long getRecordUq(String guidInput) {
 //        return standardDxRegistrService.getFirstByGuidInput(guidInput).getRecordUq();
@@ -226,5 +229,22 @@ public class CalcUtility {
         for (long recordUq : recordUqArr) {
             addDocToCalcCheckList(recordUq, caseDescription);
         }
+    }
+
+    // Поиск recordUQ документа по ИД из чек листа
+    public long getRecordUqResultByIdCheckList(long id) {
+
+       long recordUq = testCalcCheckListService.findById(id).getRecordUqRegistr();
+        System.out.println(recordUq);
+
+       return recordUq;
+    }
+
+    // Получаем количество записей с ошибками
+    public int getCountErr() {
+        int countError;
+        List<TestCalcCheckListEntity> docList = testCalcCheckListService.getAllByCalcResult(0);
+        countError = docList.size();
+        return countError;
     }
 }

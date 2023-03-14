@@ -12,6 +12,9 @@ public interface TestCalcResultRepository extends JpaRepository<TestCalcResultEn
     // Получаем список сущностей по RECORD_UQ
     List<TestCalcResultEntity> getAllByRecordUq(long recordUq);
 
+    // Получаем список сущностей по RECORD_UQ
+    List<TestCalcResultEntity> getAllById(long id);
+
     // Получаем список сущностей по RECORD_UQ_REGISTER
     List<TestCalcResultEntity> getAllByRecordUqRegistr(long recordUqRegistr);
 

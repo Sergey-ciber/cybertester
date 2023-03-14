@@ -36,20 +36,21 @@ public class RecalcDocs {
         properties.load(seleniumProperties);
 
         String dateBegin = "20.12.2021 00:00:00";
-        String dateEnd = "31.12.2022 00:00:00";
+        String dateEnd = "31.03.2023 00:00:00";
 
 
 //        System.setProperty("webdriver.chrome.driver", "C:\\SeleniumDrivers\\chromedriver.exe");
 
 //       ** Режим без интерфейса **
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+//        options.addArguments("--headless");
+        options.addArguments("--remote-allow-origins=*");
 
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
 
 //        ChromeDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(600));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1000));
         Actions actions = new Actions(driver);
 
         driver.get(properties.getProperty("url"));

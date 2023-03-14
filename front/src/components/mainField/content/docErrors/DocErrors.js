@@ -1,6 +1,6 @@
 import React from "react";
 import style from './DocErrors.module.css'
-import {useParams} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 const DocErrors = (props) => {
@@ -26,8 +26,6 @@ const DocErrors = (props) => {
     }
     let docInfoEl = el()
 
-    console.log(docInfoEl)
-
 
     return (
         <div className={style.docErrors}>
@@ -35,10 +33,12 @@ const DocErrors = (props) => {
             <div>RECORD UQ = {docInfoEl.recordUqRegistr}</div>
             <div>GUID INPUT = {docInfoEl.guidInput}</div>
             <div>Результат расчета {(docInfoEl.calcResult === 1) ? "верный" : "не верный"}</div>
-            <div>
+            <div className={style.errInfo}>
                 <div>Список ошибок: <br/> {docInfoEl.message}</div>
-                <br/>
                 <div>Описание кейca: <br/> {docInfoEl.caseDescription}</div>
+                <div>
+                    <NavLink to={`/test/oldResult/${docInfoEl.id}`} id={1}>Старый результат расчета</NavLink>
+                </div>
             </div>
         </div>
     )

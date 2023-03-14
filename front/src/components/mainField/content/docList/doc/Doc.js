@@ -54,7 +54,7 @@ const Doc = (props) => {
 
     return (
         <div className={style.doc}>
-            <NavLink className={style.docLink} to={`/test/calc/${props.docEl.id}`}>
+            <NavLink className={style.docLink} to={`/test/calcList/${props.docEl.id}`}>
                 <h5>{props.docEl.id}</h5>
                 <h5>{props.docEl.recordUqRegistr}</h5>
                 <h5>{props.docEl.guidInput}</h5>

@@ -27,6 +27,11 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
     }
 
     @Override
+    public TestCalcCheckListEntity findById(long id) {
+        return testCalcCheckListRepository.findById(id);
+    }
+
+    @Override
     public List<TestCalcCheckListEntity> getAllByRecordUqRegistr(long recordUqRegistr) {
         return testCalcCheckListRepository.getAllByRecordUqRegistr(recordUqRegistr);
     }
@@ -59,6 +64,12 @@ public class TestCalcCheckListServiceImpl implements TestCalcCheckListService {
     @Override
     public List<TestCalcCheckListEntity> getAllByDoCheck(int doCheck) {
         return testCalcCheckListRepository.getAllByDoCheck(doCheck);
+    }
+
+    // Получаем все записи с ошибкой
+    @Override
+    public List<TestCalcCheckListEntity> getAllByCalcResult(int calcResult) {
+        return testCalcCheckListRepository.getAllByCalcResult(calcResult);
     }
 
     @Override

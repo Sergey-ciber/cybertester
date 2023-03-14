@@ -40,6 +40,11 @@ public class TestCalcResultServiceImpl implements TestCalcResultService{
     }
 
     @Override
+    public List<TestCalcResultEntity> getAllById(long id) {
+        return testCalcResultRepository.getAllById(id);
+    }
+
+    @Override
     public List<TestCalcResultEntity> getAllByRecordUqRegistr(long recordUqRegistr) {
         return testCalcResultRepository.getAllByRecordUqRegistr(recordUqRegistr);
     }

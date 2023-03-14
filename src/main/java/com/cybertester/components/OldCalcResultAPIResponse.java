@@ -8,10 +8,8 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalcAPIResponse<T> {
+public class OldCalcResultAPIResponse<T> {
 
-    int docsCount;
-    int countError;
-    T docList;
+    T oldCalcResultArr;
     HttpStatus h;
 }

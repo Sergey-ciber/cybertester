@@ -12,6 +12,8 @@ public interface TestCalcResultService {
 
     // Получаем список сущностей по RECORD_UQ
     List<TestCalcResultEntity> getAllByRecordUq(long recordUq);
+    // Получаем список сущностей по RECORD_UQ_REGISTR
+    List<TestCalcResultEntity> getAllById(long id);
 
     // Получаем список сущностей по RECORD_UQ_REGISTR
     List<TestCalcResultEntity> getAllByRecordUqRegistr(long recordUqRegistr);
